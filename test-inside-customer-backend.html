@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inside Customer Backend Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .test-result { margin: 10px 0; padding: 10px; background: #f9f9f9; border-left: 4px solid #007bff; }
+        .error { border-left-color: #dc3545; background: #f8d7da; }
+        .success { border-left-color: #28a745; background: #d4edda; }
+        input, textarea, button { margin: 5px; padding: 8px; }
+        button { background: #007bff; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <h1>Admin Inside Customer Backend API Test</h1>
+    
+    <div class="test-section">
+        <h2>1. Get Customer Details</h2>
+        <input type="text" id="customerIdInput" placeholder="Customer ID (e.g., 1)" style="width: 200px;">
+        <button onclick="testGetCustomerDetails()">Get Customer Details</button>
+        <div id="customerDetailsResult" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Get Purchase History</h2>
+        <input type="text" id="historyCustomerIdInput" placeholder="Customer ID" style="width: 200px;">
+        <button onclick="testGetPurchaseHistory()">Get Purchase History</button>
+        <div id="purchaseHistoryResult" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Update Customer</h2>
+        <div>
+            <input type="text" id="updateCustomerId" placeholder="Customer ID" style="width: 150px;">
+            <input type="text" id="updateFullName" placeholder="Full Name" style="width: 200px;">
+            <input type="text" id="updatePhone" placeholder="Phone Number" style="width: 150px;">
+        </div>
+        <div>
+            <input type="email" id="updateEmail" placeholder="Email" style="width: 200px;">
+            <input type="date" id="updateDOB" style="width: 150px;">
+        </div>
+        <div>
+            <textarea id="updateAddress" placeholder="Address" style="width: 300px; height: 60px;"></textarea>
+        </div>
+        <button onclick="testUpdateCustomer()">Update Customer</button>
+        <div id="updateCustomerResult" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. Customer Statistics</h2>
+        <input type="text" id="statsCustomerId" placeholder="Customer ID" style="width: 200px;">
+        <button onclick="testGetCustomerStats()">Get Customer Statistics</button>
+        <div id="customerStatsResult" class="test-result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>5. Delete Customer</h2>
+        <input type="text" id="deleteCustomerId" placeholder="Customer ID" style="width: 200px;">
+        <button onclick="testDeleteCustomer()" style="background: #dc3545;">Delete Customer</button>
+        <div id="deleteCustomerResult" class="test-result"></div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'php/admin-inside-customer.php';
+
+        function displayResult(elementId, data, isError = false) {
+            const element = document.getElementById(elementId);
+            element.className = `test-result ${isError ? 'error' : 'success'}`;
+            
+            if (typeof data === 'object') {
+                element.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+            } else {
+                element.innerHTML = data;
+            }
+        }
+
+        async function testGetCustomerDetails() {
+            try {
+                const customerId = document.getElementById('customerIdInput').value;
+                if (!customerId) {
+                    alert('Please enter a customer ID');
+                    return;
+                }
+
+                const params = new URLSearchParams({
+                    action: 'get_customer_details',
+                    customer_id: customerId
+                });
+                
+                const response = await fetch(`${API_BASE_URL}?${params}`);
+                const data = await response.json();
+                
+                displayResult('customerDetailsResult', data, !data.success);
+                
+            } catch (error) {
+                displayResult('customerDetailsResult', `Error: ${error.message}`, true);
+            }
+        }
+
+        async function testGetPurchaseHistory() {
+            try {
+                const customerId = document.getElementById('historyCustomerIdInput').value;
+                if (!customerId) {
+                    alert('Please enter a customer ID');
+                    return;
+                }
+
+                const params = new URLSearchParams({
+                    action: 'get_purchase_history',
+                    customer_id: customerId,
+                    limit: 10
+                });
+                
+                const response = await fetch(`${API_BASE_URL}?${params}`);
+                const data = await response.json();
+                
+                if (data.success && data.purchases) {
+                    let html = `<h4>Purchase History for Customer ${customerId}:</h4>`;
+                    html += '<table><tr><th>Sale ID</th><th>Date</th><th>Time</th><th>Items</th><th>Amount</th><th>User</th></tr>';
+                    data.purchases.forEach(purchase => {
+                        html += `<tr>
+                            <td>${purchase.sale_id}</td>
+                            <td>${purchase.date}</td>
+                            <td>${purchase.time}</td>
+                            <td>${purchase.items}</td>
+                            <td>Rs. ${purchase.amount.toFixed(2)}</td>
+                            <td>${purchase.user}</td>
+                        </tr>`;
+                    });
+                    html += '</table>';
+                    html += `<p>Total: ${data.pagination.total_count} purchases</p>`;
+                    displayResult('purchaseHistoryResult', html);
+                } else {
+                    displayResult('purchaseHistoryResult', data, true);
+                }
+                
+            } catch (error) {
+                displayResult('purchaseHistoryResult', `Error: ${error.message}`, true);
+            }
+        }
+
+        async function testUpdateCustomer() {
+            try {
+                const customerId = document.getElementById('updateCustomerId').value;
+                const fullName = document.getElementById('updateFullName').value;
+                const phone = document.getElementById('updatePhone').value;
+                const email = document.getElementById('updateEmail').value;
+                const dob = document.getElementById('updateDOB').value;
+                const address = document.getElementById('updateAddress').value;
+
+                if (!customerId || !fullName || !phone || !address || !dob) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('action', 'update_customer');
+                formData.append('customer_id', customerId);
+                formData.append('full_name', fullName);
+                formData.append('phone_number', phone);
+                formData.append('email', email);
+                formData.append('address', address);
+                formData.append('date_of_birth', dob);
+                
+                const response = await fetch(API_BASE_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                displayResult('updateCustomerResult', data, !data.success);
+                
+            } catch (error) {
+                displayResult('updateCustomerResult', `Error: ${error.message}`, true);
+            }
+        }
+
+        async function testGetCustomerStats() {
+            try {
+                const customerId = document.getElementById('statsCustomerId').value;
+                if (!customerId) {
+                    alert('Please enter a customer ID');
+                    return;
+                }
+
+                const params = new URLSearchParams({
+                    action: 'get_customer_stats',
+                    customer_id: customerId
+                });
+                
+                const response = await fetch(`${API_BASE_URL}?${params}`);
+                const data = await response.json();
+                
+                displayResult('customerStatsResult', data, !data.success);
+                
+            } catch (error) {
+                displayResult('customerStatsResult', `Error: ${error.message}`, true);
+            }
+        }
+
+        async function testDeleteCustomer() {
+            try {
+                const customerId = document.getElementById('deleteCustomerId').value;
+                if (!customerId) {
+                    alert('Please enter a customer ID');
+                    return;
+                }
+
+                if (!confirm('Are you sure you want to delete this customer? This action cannot be undone.')) {
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('action', 'delete_customer');
+                formData.append('customer_id', customerId);
+                
+                const response = await fetch(API_BASE_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                displayResult('deleteCustomerResult', data, !data.success);
+                
+            } catch (error) {
+                displayResult('deleteCustomerResult', `Error: ${error.message}`, true);
+            }
+        }
+
+        // Auto-populate some test values on page load
+        window.onload = function() {
+            document.getElementById('customerIdInput').value = '1';
+            document.getElementById('historyCustomerIdInput').value = '1';
+            document.getElementById('statsCustomerId').value = '1';
+        };
+    </script>
+</body>
+</html>

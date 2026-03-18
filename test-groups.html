@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Medicine Groups</title>
+</head>
+<body>
+    <h1>Medicine Groups Test</h1>
+    <select id="testCategorySelect">
+        <option value="">Loading...</option>
+    </select>
+    
+    <script>
+        async function loadMedicineGroups() {
+            try {
+                const response = await fetch('php/admin-inside-med.php?action=get_medicine_groups');
+                const data = await response.json();
+                
+                console.log('API Response:', data);
+                
+                if (data.success) {
+                    const select = document.getElementById('testCategorySelect');
+                    select.innerHTML = '<option value="">Select Category</option>';
+                    
+                    data.data.groups.forEach(group => {
+                        const option = document.createElement('option');
+                        option.value = group.med_group_name;
+                        option.textContent = group.med_group_name;
+                        select.appendChild(option);
+                    });
+                    
+                    console.log('Groups loaded successfully:', data.data.groups);
+                } else {
+                    console.error('API Error:', data.error);
+                }
+            } catch (error) {
+                console.error('Network Error:', error);
+            }
+        }
+        
+        window.addEventListener('load', loadMedicineGroups);
+    </script>
+</body>
+</html>

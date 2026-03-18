@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Details - New Lanka Pharmacy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/modal-styles.css">
+    <script src="js/universal-session-manager.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="icons/pharmacy-logo.png" alt="New Lanka Pharmacy" class="logo">
+                <span class="brand-name">New Lanka</span>
+            </div>
+            
+            <!-- Pharmacist Profile Section -->
+            <div class="admin-section">
+                <div class="admin-profile-sidebar">
+                    <img src="profile.jpg" alt="Pharmacist" class="admin-avatar">
+                    <div class="admin-info">
+                        <h4>Pharmacist</h4>
+                        <span>Pharmacist</span>
+                    </div>
+                    <div class="admin-menu">
+                        <button class="admin-menu-btn" id="adminMenuBtn">⋮</button>
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span class="logout-icon">🚪</span>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>            <div class="nav-menu">
+                <a href="pharmacist-cashier.html" class="nav-item">
+                    <img src="icons/casheir.png" alt="Cashier" class="nav-icon">
+                    Cashier
+                </a>
+                <a href="pharmacist-inventory.html" class="nav-item active">
+                    <img src="icons/inventory.png" alt="Inventory" class="nav-icon">
+                    Inventory
+                </a>
+                <a href="pharmacist-sales.html" class="nav-item">
+                    <img src="icons/history.png" alt="Sales History" class="nav-icon">
+                    Sales History
+                </a>
+                <a href="pharmacist-customers.html" class="nav-item">
+                    <img src="icons/customer.png" alt="Customers" class="nav-icon">
+                    Customers
+                </a>
+                <a href="pharmacist-configurations.html" class="nav-item">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+            </div>
+            
+            <!-- Footer Text -->
+            <div class="sidebar-footer">
+                <p>Developed by ESoft UNI Bit 004 Project Group 04</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title" id="medicineTitle">Medicine Details</h1>
+                </div>
+                <div class="header-right">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning</span>
+                        <div class="date-time">
+                            <span id="currentDate">25 May 2025</span>
+                            <span id="currentTime">22:45:04</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Header -->
+            <div class="content-header">
+                <div class="page-header">
+                    <div class="page-header-info">
+                        <h2>Medicine Information</h2>
+                        <p>View and edit detailed medicine information</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <button class="btn btn-success" id="restockBtn">
+                            <span>📦</span>
+                            Restock
+                        </button>
+                        <button class="btn btn-primary" id="editBtn">
+                            <span>✏️</span>
+                            Edit Medicine
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Body -->
+            <div class="content-body">
+                <div class="medicine-details-grid">
+                    <!-- Medicine Information Card -->
+                    <div class="medicine-card">
+                        <div class="card-header">
+                            <h3>Medicine</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="medicine-stats">
+                                <div class="medicine-stat">
+                                    <div class="stat-value" id="medicineIdDisplay">
+                                        MED001
+                                    </div>
+                                    <div class="stat-label">Medicine ID</div>
+                                </div>
+                                <div class="medicine-stat">
+                                    <div class="stat-value" id="medicineGroupDisplay">
+                                        Pain Relief
+                                    </div>
+                                    <div class="stat-label">Medicine Group</div>
+                                </div>
+                                <div class="medicine-stat">
+                                    <div class="stat-value" id="medicinePriceDisplay">
+                                        Rs 250.00
+                                    </div>
+                                    <div class="stat-label">Price</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inventory Information Card -->
+                    <div class="medicine-card">
+                        <div class="card-header">
+                            <h3>Inventory in Qty</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="medicine-stats">
+                                <div class="medicine-stat">
+                                    <div class="stat-value" id="lifetimeSupplyDisplay">
+                                        298
+                                    </div>
+                                    <div class="stat-label">Lifetime Supply</div>
+                                </div>
+                                <div class="medicine-stat">
+                                    <div class="stat-value" id="lifetimeSalesDisplay">
+                                        290
+                                    </div>
+                                    <div class="stat-label">Lifetime Sales</div>
+                                </div>
+                                <div class="medicine-stat">
+                                    <div class="stat-value" id="stockLeftDisplay">
+                                        08
+                                    </div>
+                                    <div class="stat-label">Stock Left</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Medicine Details -->
+                <div class="medicine-details-section">
+                    <!-- Medicine Form -->
+                    <div class="medicine-form-card">
+                        <div class="form-section">
+                            <h3>Medicine Details</h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="medicineNameDisplay">Medicine Name</label>
+                                    <div class="form-display" id="medicineNameDisplay">Azithral 500 Tablet</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="categoryDisplay">Category</label>
+                                    <div class="form-display" id="categoryDisplay">Antibiotic</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="brandDisplay">Brand</label>
+                                    <div class="form-display" id="brandDisplay">PharmaCorp Ltd.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- How to Use Section -->
+                    <div class="medicine-info-card">
+                        <div class="card-header">
+                            <h3>How to use</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="info-display" id="howToUseDisplay">Take this medication by mouth with or without food as directed by your doctor, usually once daily.</div>
+                        </div>
+                    </div>
+
+                    <!-- Side Effects Section -->
+                    <div class="medicine-info-card">
+                        <div class="card-header">
+                            <h3>Side Effects</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="info-display" id="sideEffectsDisplay">Dizziness, lightheadedness, drowsiness, nausea, vomiting, tiredness, excess saliva/drooling, blurred vision, weight gain, constipation, headache, and trouble sleeping may occur. If any of these effects persist or worsen, consult your doctor.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-danger" id="deleteBtn">
+                        <span>🗑️</span>
+                        Delete Medicine
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Medicine Modal -->
+    <div id="editMedicineModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Medicine</h2>
+                <span class="close" id="editModalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="medicine-form">
+                    <div style="width: 100%;">
+                        <div class="info-row">
+                            <span class="info-label">Medicine Name:</span>
+                            <input type="text" class="form-input" id="editMedicineName" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Category:</span>
+                            <select class="form-input" id="editCategory" style="text-align: left;">
+                                <option value="Pain Relief">Pain Relief</option>
+                                <option value="Antibiotic">Antibiotic</option>
+                                <option value="Antihistamine">Antihistamine</option>
+                                <option value="Antacid">Antacid</option>
+                                <option value="Diabetes">Diabetes</option>
+                                <option value="Hypertension">Hypertension</option>
+                                <option value="Vitamin">Vitamin</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Brand:</span>
+                            <input type="text" class="form-input" id="editBrand" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Price (Rs.):</span>
+                            <input type="number" class="form-input" id="editPrice" step="0.01" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">How to Use:</span>
+                            <textarea class="form-input" id="editHowToUse" rows="3" style="text-align: left; resize: vertical;"></textarea>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Side Effects:</span>
+                            <textarea class="form-input" id="editSideEffects" rows="4" style="text-align: left; resize: vertical;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="editModalCancel">Cancel</button>
+                <button class="btn btn-primary" id="editModalSave">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Restock Medicine Modal -->
+    <div id="restockModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Restock Medicine</h2>
+                <span class="close" id="restockModalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="restock-form">
+                    <div style="width: 100%;">
+                        <div class="info-row">
+                            <span class="info-label">Current Stock:</span>
+                            <div class="form-display" id="restockCurrentStock">8</div>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Add Quantity:</span>
+                            <input type="number" class="form-input" id="restockQuantity" min="1" placeholder="Enter quantity to add" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">New Stock Level:</span>
+                            <div class="form-display" id="newStockLevel">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="restockModalCancel">Cancel</button>
+                <button class="btn btn-success" id="restockModalSave">Confirm Restock</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/pharmacist-inside-med.js" defer></script>
+</body>
+</html>
+
+
+
+

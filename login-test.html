@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Login Test - New Lanka Pharmacy</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        .login-box { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .form-group { margin: 15px 0; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select { 
+            width: 100%; 
+            padding: 10px; 
+            border: 1px solid #ddd; 
+            border-radius: 4px; 
+            box-sizing: border-box;
+        }
+        button { 
+            background: #007bff; 
+            color: white; 
+            padding: 12px 20px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover { background: #0056b3; }
+        .users-list { 
+            background: #f8f9fa; 
+            padding: 15px; 
+            border-radius: 4px; 
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .error { color: red; margin: 10px 0; }
+        .success { color: green; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>🧪 Quick Login Test</h2>
+        
+        <div id="message"></div>
+        
+        <form id="testLoginForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" value="admin" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" value="admin" required>
+            </div>
+            
+            <button type="submit">🔑 Test Login</button>
+        </form>
+        
+        <div style="margin-top: 20px; text-align: center;">
+            <button onclick="loadUsers()" style="background: #28a745;">👥 Load Users</button>
+            <button onclick="checkSession()" style="background: #17a2b8;">🔍 Check Session</button>
+        </div>
+        
+        <div id="usersList" class="users-list" style="display: none;">
+            <h4>Available Users:</h4>
+            <div id="usersData">Loading...</div>
+        </div>
+    </div>
+
+    <script>
+        // Handle login form
+        document.getElementById('testLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const messageDiv = document.getElementById('message');
+            
+            try {
+                const response = await fetch('php/login_handler.php', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    messageDiv.innerHTML = '<div class="success">✅ Login successful! Redirecting to ' + data.user.role + ' dashboard...</div>';
+                    setTimeout(() => {
+                        window.location.href = data.redirect || 'profile-test.html';
+                    }, 1500);
+                } else {
+                    messageDiv.innerHTML = '<div class="error">❌ ' + data.message + '</div>';
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<div class="error">❌ Error: ' + error.message + '</div>';
+            }
+        });
+        
+        // Load users from database
+        async function loadUsers() {
+            const usersList = document.getElementById('usersList');
+            const usersData = document.getElementById('usersData');
+            
+            try {
+                const response = await fetch('php/list-users.php');
+                const data = await response.json();
+                
+                if (data.success) {
+                    let html = '<table style="width: 100%; border-collapse: collapse;">';
+                    html += '<tr style="background: #e9ecef;"><th style="padding: 8px; border: 1px solid #ddd;">ID</th><th style="padding: 8px; border: 1px solid #ddd;">Username</th><th style="padding: 8px; border: 1px solid #ddd;">Role</th><th style="padding: 8px; border: 1px solid #ddd;">Status</th></tr>';
+                    
+                    data.users.forEach(user => {
+                        html += `<tr>
+                            <td style="padding: 8px; border: 1px solid #ddd;">${user.user_id}</td>
+                            <td style="padding: 8px; border: 1px solid #ddd;">${user.user_name}</td>
+                            <td style="padding: 8px; border: 1px solid #ddd;">${user.role}</td>
+                            <td style="padding: 8px; border: 1px solid #ddd;">${user.status}</td>
+                        </tr>`;
+                    });
+                    html += '</table>';
+                    
+                    usersData.innerHTML = html;
+                    usersList.style.display = 'block';
+                } else {
+                    usersData.innerHTML = '<div class="error">❌ ' + data.error + '</div>';
+                    usersList.style.display = 'block';
+                }
+            } catch (error) {
+                usersData.innerHTML = '<div class="error">❌ Error: ' + error.message + '</div>';
+                usersList.style.display = 'block';
+            }
+        }
+        
+        // Check current session
+        async function checkSession() {
+            try {
+                const response = await fetch('php/session-test.php');
+                const data = await response.json();
+                
+                const messageDiv = document.getElementById('message');
+                if (data.success) {
+                    messageDiv.innerHTML = '<div class="success">✅ Session active: ' + data.database_data.user_name + ' (' + data.database_data.role + ')</div>';
+                } else {
+                    messageDiv.innerHTML = '<div class="error">❌ ' + data.error + '</div>';
+                }
+            } catch (error) {
+                document.getElementById('message').innerHTML = '<div class="error">❌ Session check failed: ' + error.message + '</div>';
+            }
+        }
+        
+        // Auto-load users on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUsers();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Configurations - New Lanka Pharmacy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/modal-styles.css">
+    <script src="js/universal-session-manager.js" defer></script>
+    <script src="js/user-profile-manager.js" defer></script>
+    <script src="js/admin-configurations.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="icons/pharmacy-logo.png" alt="New Lanka Pharmacy" class="logo">
+                <span class="brand-name">New Lanka</span>
+            </div>
+            
+            <!-- Admin Profile Section -->
+            <div class="admin-section">
+                <div class="admin-profile-sidebar">
+                    <img src="img/default-profile.png" alt="Admin" class="admin-avatar">
+                    <div class="admin-info">
+                        <h4 id="sidebarAdminName">Admin</h4> 
+                        <span>Admin</span>
+                    </div>
+                    <div class="admin-menu">
+                        <button class="admin-menu-btn" id="adminMenuBtn">⋮</button>
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span class="logout-icon">🚪</span>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <div class="nav-menu">
+                <a href="admin-dashboard.html" class="nav-item">
+                    <img src="icons/dashboard.png" alt="Dashboard" class="nav-icon">
+                    Dashboard
+                </a>
+                <a href="admin-cashier.html" class="nav-item">
+                    <img src="icons/casheir.png" alt="Cashier" class="nav-icon">
+                    Cashier
+                </a>
+                <a href="admin-inventory.html" class="nav-item">
+                    <img src="icons/inventory.png" alt="Inventory" class="nav-icon">
+                    Inventory
+                </a>
+                <a href="admin-sales.html" class="nav-item">
+                    <img src="icons/history.png" alt="Sales History" class="nav-icon">
+                    Sales History
+                </a>
+                <a href="admin-reports.html" class="nav-item">
+                    <img src="icons/reports.png" alt="Reports" class="nav-icon">
+                    Reports
+                </a>
+                <a href="admin-customers.html" class="nav-item">
+                    <img src="icons/customer.png" alt="Customers" class="nav-icon">
+                    Customers
+                </a>
+                <a href="admin-configurations.html" class="nav-item active">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+            </div>
+            
+            <!-- Footer Text -->
+            <div class="sidebar-footer">
+                <p>Developed by ESoft UNI Bit 004 Project Group 04</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">Configuration</h1>
+                </div>
+                <div class="header-right">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning</span>
+                        <div class="date-time">
+                            <span id="currentDate">25 May 2025</span>
+                            <span id="currentTime">22:45:04</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Header -->
+            <div class="content-header">
+            </div>
+
+            <!-- Content Body -->
+            <div class="content-body">
+                <!-- Admin Profile Section -->
+                <div class="info-section">
+                    <div class="info-card">
+                        <div class="info-header">
+                            <h3>👤 Admin Profile</h3>
+                        </div>                        <div class="info-content">
+                            <div style="display: flex; gap: 30px; align-items: flex-start;">
+                                <!-- Profile Picture Section -->
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                                    <div style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; border: 3px solid #ddd;">
+                                        <img src="img/default-profile.png" alt="Admin Profile" id="adminProfilePreview" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                    <input type="file" id="adminProfileInput" accept="image/*" style="display: none;">
+                                    <button class="btn btn-secondary" id="changeProfilePicBtn">📷 Change Picture</button>
+                                </div>
+                                
+                                <!-- Admin Details Section -->
+                                <div style="flex: 1;">
+                                    <div class="info-row">
+                                        <span class="info-label">Admin Name:</span>
+                                        <span class="info-value" id="displayAdminName">Admin</span>
+                                    </div>
+                                    <div class="info-row" style="margin-top: 20px;">
+                                        <button class="btn btn-primary" id="editAdminBtn">
+                                            <span>✏️</span>
+                                            Edit Profile
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Management Section -->
+                <div class="medicine-details-section">
+                    <div class="medicine-form-card">
+                        <div class="form-section">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <h3>👥 User Management (Pharmacists)</h3>
+                                <button class="btn btn-primary" id="addUserBtn">
+                                    <span>➕</span>
+                                    Add New User
+                                </button>
+                            </div>
+                            
+                            <!-- Users Table -->
+                            <div class="table-container">
+                                <table class="medicine-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Profile</th>
+                                            <th>Username</th>
+                                            <th>Password</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="usersTable">
+                                        <!-- Users will be populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit User Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New User</h2>
+                <span class="close" id="modalClose">&times;</span>
+            </div>            <div class="modal-body">
+                <div class="user-form">
+                    <!-- User Details Section -->
+                    <div style="width: 100%;">
+                        <div class="info-row">
+                            <span class="info-label">Username:</span>
+                            <input type="text" class="form-input" id="modalUsername" placeholder="Enter username" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Password:</span>
+                            <input type="password" class="form-input" id="modalPassword" placeholder="Enter password" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Status:</span>
+                            <select class="form-input" id="modalStatus" style="text-align: left;">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modalCancel">Cancel</button>
+                <button class="btn btn-primary" id="modalSave">Save User</button>
+            </div>
+        </div>    </div>
+
+    <!-- Edit Admin Profile Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="adminModalTitle">Edit Admin Profile</h2>
+                <span class="close" id="adminModalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="admin-form">
+                    <!-- Admin Details Section -->
+                    <div style="width: 100%;">
+                        <div class="info-row">
+                            <span class="info-label">Admin Name:</span>
+                            <input type="text" class="form-input" id="modalAdminName" placeholder="Enter admin name" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Current Password:</span>
+                            <input type="password" class="form-input" id="modalCurrentPassword" placeholder="Enter current password" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">New Password:</span>
+                            <input type="password" class="form-input" id="modalNewPassword" placeholder="Enter new password" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Confirm Password:</span>
+                            <input type="password" class="form-input" id="modalConfirmPassword" placeholder="Confirm new password" style="text-align: left;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="adminModalCancel">Cancel</button>
+                <button class="btn btn-primary" id="adminModalSave">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

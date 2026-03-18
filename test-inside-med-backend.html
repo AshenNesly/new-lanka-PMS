@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Admin Inside Medicine Backend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button.danger {
+            background: #dc3545;
+        }
+        button.danger:hover {
+            background: #c82333;
+        }
+        button.success {
+            background: #28a745;
+        }
+        button.success:hover {
+            background: #218838;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        .medicine-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #dee2e6;
+        }
+        .medicine-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .info-item {
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            border-left: 3px solid #007bff;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        .info-value {
+            font-size: 16px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Inside Medicine Backend API Test</h1>
+        
+        <div class="test-section">
+            <h3>1. Test Get Medicine Details</h3>
+            <div class="form-group">
+                <label>Medicine ID:</label>
+                <input type="number" id="medicineId" value="1" min="1">
+            </div>
+            <button onclick="testGetMedicineDetails()">Get Medicine Details</button>
+            <div id="medicineDetailsResult" class="result" style="display: none;"></div>
+            <div id="medicineCard" class="medicine-card" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>2. Test Update Medicine</h3>
+            <div class="form-group">
+                <label>Medicine ID to Update:</label>
+                <input type="number" id="updateMedicineId" value="1">
+            </div>
+            <div class="form-group">
+                <label>Medicine Name:</label>
+                <input type="text" id="updateMedicineName" value="Updated Medicine Name">
+            </div>
+            <div class="form-group">
+                <label>Brand:</label>
+                <input type="text" id="updateMedicineBrand" value="Updated Brand">
+            </div>
+            <div class="form-group">
+                <label>Category:</label>
+                <select id="updateMedicineCategory">
+                    <option value="Pain Relief">Pain Relief</option>
+                    <option value="Antibiotic">Antibiotic</option>
+                    <option value="Vitamin">Vitamin</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Price:</label>
+                <input type="number" id="updateMedicinePrice" step="0.01" value="25.50">
+            </div>
+            <div class="form-group">
+                <label>How to Use:</label>
+                <textarea id="updateMedicineHowToUse">Updated usage instructions</textarea>
+            </div>
+            <div class="form-group">
+                <label>Side Effects:</label>
+                <textarea id="updateMedicineSideEffects">Updated side effects information</textarea>
+            </div>
+            <button onclick="testUpdateMedicine()">Update Medicine</button>
+            <div id="updateMedicineResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>3. Test Restock Medicine</h3>
+            <div class="form-group">
+                <label>Medicine ID to Restock:</label>
+                <input type="number" id="restockMedicineId" value="1">
+            </div>
+            <div class="form-group">
+                <label>Quantity to Add:</label>
+                <input type="number" id="restockQuantity" value="50" min="1">
+            </div>
+            <button class="success" onclick="testRestockMedicine()">Restock Medicine</button>
+            <div id="restockMedicineResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>4. Test Medicine Sales History</h3>
+            <div class="form-group">
+                <label>Medicine ID:</label>
+                <input type="number" id="salesHistoryMedicineId" value="1">
+            </div>
+            <button onclick="testMedicineSalesHistory()">Get Sales History</button>
+            <div id="salesHistoryResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>5. Test Delete Medicine</h3>
+            <div class="form-group">
+                <label>Medicine ID to Delete:</label>
+                <input type="number" id="deleteMedicineId" value="999">
+                <small style="color: #666;">Use a non-existent ID like 999 for safe testing</small>
+            </div>
+            <button class="danger" onclick="testDeleteMedicine()">Delete Medicine</button>
+            <div id="deleteMedicineResult" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'php/admin-inside-med.php';
+
+        async function makeAPICall(action, method = 'GET', data = null) {
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+
+                let url = API_BASE_URL;
+                
+                if (method === 'GET' || method === 'DELETE') {
+                    const params = new URLSearchParams({ action, ...data });
+                    url += '?' + params.toString();
+                } else {
+                    options.body = JSON.stringify({ action, ...data });
+                }
+
+                const response = await fetch(url, options);
+                const result = await response.json();
+                
+                return {
+                    success: response.ok && result.success,
+                    data: result,
+                    status: response.status
+                };
+            } catch (error) {
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
+        }
+
+        async function testGetMedicineDetails() {
+            const medicineId = document.getElementById('medicineId').value;
+            const result = await makeAPICall('get_medicine_details', 'GET', { medicine_id: medicineId });
+            const resultDiv = document.getElementById('medicineDetailsResult');
+            const medicineCard = document.getElementById('medicineCard');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Medicine Details Result:</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+
+            if (result.success && result.data.data && result.data.data.medicine) {
+                const medicine = result.data.data.medicine;
+                const data = result.data.data;
+                
+                medicineCard.style.display = 'block';
+                medicineCard.innerHTML = `
+                    <h4>Medicine Information Card</h4>
+                    <div class="medicine-info">
+                        <div class="info-item">
+                            <div class="info-label">Medicine ID</div>
+                            <div class="info-value">MED${String(medicine.medicine_id).padStart(3, '0')}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Medicine Name</div>
+                            <div class="info-value">${medicine.medicine_name}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Brand</div>
+                            <div class="info-value">${medicine.medicine_brand}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Category</div>
+                            <div class="info-value">${medicine.category || 'N/A'}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Price</div>
+                            <div class="info-value">${data.formatted_price}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Stock Left</div>
+                            <div class="info-value">${medicine.stock_left}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Lifetime Supply</div>
+                            <div class="info-value">${medicine.lifetime_supply}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Lifetime Sales</div>
+                            <div class="info-value">${data.lifetime_sales}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Status</div>
+                            <div class="info-value">${medicine.status_text}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Total Revenue</div>
+                            <div class="info-value">${data.formatted_revenue}</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <h5>How to Use:</h5>
+                        <p>${medicine.how_to_use || 'No usage instructions available.'}</p>
+                        <h5>Side Effects:</h5>
+                        <p>${medicine.side_effects || 'No side effects information available.'}</p>
+                    </div>
+                `;
+            } else {
+                medicineCard.style.display = 'none';
+            }
+        }
+
+        async function testUpdateMedicine() {
+            const updateData = {
+                medicine_id: parseInt(document.getElementById('updateMedicineId').value),
+                medicine_name: document.getElementById('updateMedicineName').value,
+                medicine_brand: document.getElementById('updateMedicineBrand').value,
+                category: document.getElementById('updateMedicineCategory').value,
+                medicine_price: parseFloat(document.getElementById('updateMedicinePrice').value),
+                how_to_use: document.getElementById('updateMedicineHowToUse').value,
+                side_effects: document.getElementById('updateMedicineSideEffects').value
+            };
+
+            const result = await makeAPICall('update_medicine', 'POST', updateData);
+            const resultDiv = document.getElementById('updateMedicineResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Update Medicine Result:</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+        }
+
+        async function testRestockMedicine() {
+            const restockData = {
+                medicine_id: parseInt(document.getElementById('restockMedicineId').value),
+                add_quantity: parseInt(document.getElementById('restockQuantity').value)
+            };
+
+            const result = await makeAPICall('restock_medicine', 'POST', restockData);
+            const resultDiv = document.getElementById('restockMedicineResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Restock Medicine Result:</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+        }
+
+        async function testMedicineSalesHistory() {
+            const medicineId = document.getElementById('salesHistoryMedicineId').value;
+            const result = await makeAPICall('get_medicine_sales_history', 'GET', { 
+                medicine_id: medicineId,
+                page: 1,
+                limit: 10
+            });
+            const resultDiv = document.getElementById('salesHistoryResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Medicine Sales History Result:</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+        }
+
+        async function testDeleteMedicine() {
+            const medicineId = document.getElementById('deleteMedicineId').value;
+            
+            if (!confirm(`Are you sure you want to test deleting medicine ID ${medicineId}?`)) {
+                return;
+            }
+
+            const result = await makeAPICall('delete_medicine', 'DELETE', { medicine_id: medicineId });
+            const resultDiv = document.getElementById('deleteMedicineResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Delete Medicine Result:</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+        }
+
+        // Auto-load medicine details on page load
+        window.addEventListener('load', function() {
+            testGetMedicineDetails();
+        });
+    </script>
+</body>
+</html>

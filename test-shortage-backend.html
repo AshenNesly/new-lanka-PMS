@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Shortage Backend API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .test-section { background: white; margin: 20px 0; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .test-button { background: #007cba; color: white; border: none; padding: 10px 20px; margin: 5px; border-radius: 4px; cursor: pointer; }
+        .test-button:hover { background: #005a84; }
+        .result { margin-top: 10px; padding: 10px; border-radius: 4px; white-space: pre-wrap; font-family: monospace; max-height: 400px; overflow-y: auto; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .form-group { margin: 10px 0; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; }
+        .form-group input, .form-group select { padding: 8px; border: 1px solid #ddd; border-radius: 4px; width: 200px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Medicine Shortage Backend API Test</h1>
+        
+        <!-- Get Shortage Medicines Test -->
+        <div class="test-section">
+            <h3>1. Get Shortage Medicines</h3>
+            <div class="form-group">
+                <label>Page:</label>
+                <input type="number" id="shortagePageInput" value="1" min="1">
+            </div>
+            <div class="form-group">
+                <label>Search Term:</label>
+                <input type="text" id="shortageSearchInput" placeholder="Medicine name, category, etc.">
+            </div>
+            <div class="form-group">
+                <label>Stock Threshold:</label>
+                <input type="number" id="shortageThresholdInput" value="10" min="1">
+            </div>
+            <button class="test-button" onclick="testGetShortageMedicines()">Get Shortage Medicines</button>
+            <div id="shortageResult" class="result"></div>
+        </div>
+
+        <!-- Get Shortage Statistics Test -->
+        <div class="test-section">
+            <h3>2. Get Shortage Statistics</h3>
+            <button class="test-button" onclick="testGetShortageStatistics()">Get Statistics</button>
+            <div id="statisticsResult" class="result"></div>
+        </div>
+
+        <!-- Search Shortage Medicines Test -->
+        <div class="test-section">
+            <h3>3. Advanced Search</h3>
+            <div class="form-group">
+                <label>Search Term:</label>
+                <input type="text" id="advSearchTerm" placeholder="Enter search term">
+            </div>
+            <div class="form-group">
+                <label>Category:</label>
+                <input type="text" id="advSearchCategory" placeholder="e.g., Pain Relief">
+            </div>
+            <div class="form-group">
+                <label>Stock Status:</label>
+                <select id="advSearchStatus">
+                    <option value="">All</option>
+                    <option value="out_of_stock">Out of Stock</option>
+                    <option value="critical_stock">Critical Stock</option>
+                    <option value="low_stock">Low Stock</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Sort By:</label>
+                <select id="advSearchSort">
+                    <option value="priority">Priority</option>
+                    <option value="name">Name</option>
+                    <option value="stock">Stock Level</option>
+                    <option value="category">Category</option>
+                    <option value="price">Price</option>
+                </select>
+            </div>
+            <button class="test-button" onclick="testAdvancedSearch()">Advanced Search</button>
+            <div id="advSearchResult" class="result"></div>
+        </div>
+
+        <!-- Generate Report Test -->
+        <div class="test-section">
+            <h3>4. Generate Shortage Report</h3>
+            <button class="test-button" onclick="testGenerateReport()">Generate Report</button>
+            <div id="reportResult" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'php/admin-med-shortage.php';
+
+        function showResult(elementId, result, isError = false) {
+            const element = document.getElementById(elementId);
+            element.textContent = JSON.stringify(result, null, 2);
+            element.className = isError ? 'result error' : 'result success';
+        }
+
+        async function testGetShortageMedicines() {
+            try {
+                const page = document.getElementById('shortagePageInput').value;
+                const search = document.getElementById('shortageSearchInput').value;
+                const threshold = document.getElementById('shortageThresholdInput').value;
+                
+                const data = {
+                    action: 'get_shortage_medicines',
+                    page: parseInt(page),
+                    search: search,
+                    threshold: parseInt(threshold),
+                    limit: 10
+                };
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                showResult('shortageResult', result, !response.ok);
+            } catch (error) {
+                showResult('shortageResult', { error: error.message }, true);
+            }
+        }
+
+        async function testGetShortageStatistics() {
+            try {
+                const data = {
+                    action: 'get_shortage_statistics'
+                };
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                showResult('statisticsResult', result, !response.ok);
+            } catch (error) {
+                showResult('statisticsResult', { error: error.message }, true);
+            }
+        }
+
+        async function testAdvancedSearch() {
+            try {
+                const data = {
+                    action: 'search_shortage_medicines',
+                    search: document.getElementById('advSearchTerm').value,
+                    category: document.getElementById('advSearchCategory').value,
+                    stock_status: document.getElementById('advSearchStatus').value,
+                    sort_by: document.getElementById('advSearchSort').value,
+                    sort_order: 'ASC',
+                    page: 1,
+                    limit: 10
+                };
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                showResult('advSearchResult', result, !response.ok);
+            } catch (error) {
+                showResult('advSearchResult', { error: error.message }, true);
+            }
+        }
+
+        async function testGenerateReport() {
+            try {
+                const data = {
+                    action: 'generate_shortage_report',
+                    type: 'summary'
+                };
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                showResult('reportResult', result, !response.ok);
+            } catch (error) {
+                showResult('reportResult', { error: error.message }, true);
+            }
+        }
+
+        // Auto-run basic test on load
+        window.addEventListener('load', () => {
+            testGetShortageMedicines();
+        });
+    </script>
+</body>
+</html>

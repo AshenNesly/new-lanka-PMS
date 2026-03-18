@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Admin Sales PHP</title>
+</head>
+<body>
+    <h1>Testing Admin Sales PHP</h1>
+    <button onclick="testAPI()">Test API</button>
+    <div id="result"></div>
+    
+    <script>
+        async function testAPI() {
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                console.log('Testing API...');
+                const response = await fetch('php/admin-sales.php?action=get_sales&limit=5');
+                console.log('Response status:', response.status);
+                
+                const text = await response.text();
+                console.log('Response text:', text);
+                
+                resultDiv.innerHTML = '<pre>' + text + '</pre>';
+                
+                if (response.ok) {
+                    const data = JSON.parse(text);
+                    console.log('Parsed data:', data);
+                } else {
+                    console.error('HTTP error:', response.status);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                resultDiv.innerHTML = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

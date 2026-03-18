@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Admin Inventory Backend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .stat-label {
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Inventory Backend API Test</h1>
+        
+        <div class="test-section">
+            <h3>1. Test Inventory Statistics</h3>
+            <button onclick="testInventoryStats()">Get Inventory Stats</button>
+            <div id="statsResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>2. Test Medicines List</h3>
+            <button onclick="testMedicinesList()">Get Medicines List</button>
+            <button onclick="testMedicinesListWithSearch()">Search Medicines</button>
+            <div id="medicinesResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>3. Test Medicine Groups</h3>
+            <button onclick="testMedicineGroups()">Get Medicine Groups</button>
+            <div id="groupsResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>4. Test Low Stock Medicines</h3>
+            <button onclick="testLowStockMedicines()">Get Low Stock Medicines</button>
+            <div id="lowStockResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>5. Live Stats Display</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalMedicines">-</div>
+                    <div class="stat-label">Total Medicines</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalGroups">-</div>
+                    <div class="stat-label">Medicine Groups</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="lowStockCount">-</div>
+                    <div class="stat-label">Low Stock Items</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'php/admin-inventory.php';
+
+        async function makeAPICall(action, params = {}) {
+            try {
+                const url = new URL(API_BASE_URL, window.location.origin + window.location.pathname);
+                url.searchParams.append('action', action);
+                
+                Object.keys(params).forEach(key => {
+                    url.searchParams.append(key, params[key]);
+                });
+
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                return {
+                    success: response.ok && data.success,
+                    data: data,
+                    status: response.status
+                };
+            } catch (error) {
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
+        }
+
+        async function testInventoryStats() {
+            const result = await makeAPICall('get_inventory_stats');
+            const resultDiv = document.getElementById('statsResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Inventory Stats Result:</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+            
+            // Update live stats if successful
+            if (result.success && result.data.data && result.data.data.stats) {
+                const stats = result.data.data.stats;
+                document.getElementById('totalMedicines').textContent = stats.total_medicines || '0';
+                document.getElementById('totalGroups').textContent = stats.total_groups || '0';
+                document.getElementById('lowStockCount').textContent = stats.low_stock_count || '0';
+            }
+        }
+
+        async function testMedicinesList() {
+            const result = await makeAPICall('get_medicines_list', { page: 1, limit: 5 });
+            const resultDiv = document.getElementById('medicinesResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Medicines List Result:</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+        }
+
+        async function testMedicinesListWithSearch() {
+            const result = await makeAPICall('get_medicines_list', { 
+                page: 1, 
+                limit: 5, 
+                search: 'aspirin' 
+            });
+            const resultDiv = document.getElementById('medicinesResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Medicines Search Result (aspirin):</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+        }
+
+        async function testMedicineGroups() {
+            const result = await makeAPICall('get_medicine_groups');
+            const resultDiv = document.getElementById('groupsResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Medicine Groups Result:</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+        }
+
+        async function testLowStockMedicines() {
+            const result = await makeAPICall('get_low_stock_medicines', { threshold: 10 });
+            const resultDiv = document.getElementById('lowStockResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Low Stock Medicines Result:</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+        }
+
+        // Auto-load stats on page load
+        window.addEventListener('load', function() {
+            testInventoryStats();
+        });
+    </script>
+</body>
+</html>

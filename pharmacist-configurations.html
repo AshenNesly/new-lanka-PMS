@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Configurations - New Lanka Pharmacy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/modal-styles.css">
+    <script src="js/universal-session-manager.js" defer></script>
+    <script src="js/user-profile-manager.js" defer></script>
+    <script src="js/pharmacist-configurations.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="icons/pharmacy-logo.png" alt="New Lanka Pharmacy" class="logo">
+                <span class="brand-name">New Lanka</span>
+            </div>
+            
+            <!-- Pharmacist Profile Section -->
+            <div class="admin-section">
+                <div class="admin-profile-sidebar">
+                    <img src="img/default-profile.png" alt="Pharmacist" class="admin-avatar pharmacist-avatar">
+                    <div class="admin-info">
+                        <h4 id="sidebarPharmacistName">Pharmacist</h4>
+                        <span class="user-role">Pharmacist</span>
+                    </div>
+                    <div class="admin-menu">
+                        <button class="admin-menu-btn" id="adminMenuBtn">⋮</button>
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span class="logout-icon">🚪</span>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nav-menu">
+                <a href="pharmacist-cashier.html" class="nav-item">
+                    <img src="icons/casheir.png" alt="Cashier" class="nav-icon">
+                    Cashier
+                </a>
+                <a href="pharmacist-inventory.html" class="nav-item">
+                    <img src="icons/inventory.png" alt="Inventory" class="nav-icon">
+                    Inventory
+                </a>
+                <a href="pharmacist-sales.html" class="nav-item">
+                    <img src="icons/history.png" alt="Sales History" class="nav-icon">
+                    Sales History
+                </a>
+                <a href="pharmacist-customers.html" class="nav-item">
+                    <img src="icons/customer.png" alt="Customers" class="nav-icon">
+                    Customers
+                </a>
+                <a href="pharmacist-configurations.html" class="nav-item active">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+            </div>
+            
+            <!-- Footer Text -->
+            <div class="sidebar-footer">
+                <p>Developed by ESoft UNI Bit 004 Project Group 04</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">Configuration</h1>
+                </div>
+                <div class="header-right">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning</span>
+                        <div class="date-time">
+                            <span id="currentDate">25 May 2025</span>
+                            <span id="currentTime">22:45:04</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Header -->
+            <div class="content-header">
+            </div>
+
+            <!-- Content Body -->
+            <div class="content-body">
+                <!-- Pharmacist Profile Section -->
+                <div class="info-section">
+                    <div class="info-card">
+                        <div class="info-header">
+                            <h3>👤 Pharmacist Profile</h3>
+                        </div>                        <div class="info-content">
+                            <div style="display: flex; gap: 30px; align-items: flex-start;">
+                                <!-- Profile Picture Section -->
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                                    <div style="width: 120px; height: 120px; border-radius: 50%; overflow: hidden; border: 3px solid #ddd;">
+                                        <img src="img/default-profile.png" alt="Pharmacist Profile" id="pharmacistProfilePreview" style="width: 100%; height: 100%; object-fit: cover;">
+                                    </div>
+                                    <input type="file" id="pharmacistProfileInput" accept="image/*" style="display: none;">
+                                    <button class="btn btn-secondary" id="changeProfilePicBtn">📷 Change Picture</button>
+                                </div>
+                                
+                                <!-- Pharmacist Details Section -->
+                                <div style="flex: 1;">
+                                    <div class="info-row">
+                                        <span class="info-label">Pharmacist Name:</span>
+                                        <span class="info-value current-user-name" id="displayPharmacistName">Pharmacist</span>
+                                    </div>
+                                    <div class="info-row" style="margin-top: 20px;">
+                                        <p style="color: #666; font-style: italic;">Profile information cannot be modified. Only profile picture can be updated.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+
+

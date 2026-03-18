@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Details - New Lanka Pharmacy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/modal-styles.css">
+    <script src="js/universal-session-manager.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="icons/pharmacy-logo.png" alt="New Lanka Pharmacy" class="logo">
+                <span class="brand-name">New Lanka</span>
+            </div>
+            
+            <!-- Admin Profile Section -->
+            <div class="admin-section">
+                <div class="admin-profile-sidebar">
+                    <img src="profile.jpg" alt="Admin" class="admin-avatar">
+                    <div class="admin-info">
+                        <h4>Admin</h4>
+                        <span>Admin</span>
+                    </div>
+                    <div class="admin-menu">
+                        <button class="admin-menu-btn" id="adminMenuBtn">⋮</button>
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span class="logout-icon">🚪</span>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="admin-dashboard.html" class="nav-item">
+                    <img src="icons/dashboard.png" alt="Dashboard" class="nav-icon">
+                    Dashboard
+                </a>                <a href="admin-cashier.html" class="nav-item">
+                    <img src="icons/casheir.png" alt="Cashier" class="nav-icon">
+                    Cashier
+                </a>
+                <a href="admin-inventory.html" class="nav-item">
+                    <img src="icons/inventory.png" alt="Inventory" class="nav-icon">
+                    Inventory
+                </a>
+                <a href="admin-sales.html" class="nav-item">
+                    <img src="icons/history.png" alt="Sales History" class="nav-icon">
+                    Sales History
+                </a>
+                <a href="admin-reports.html" class="nav-item">
+                    <img src="icons/reports.png" alt="Reports" class="nav-icon">
+                    Reports
+                </a>                <a href="admin-customers.html" class="nav-item active">
+                    <img src="icons/customer.png" alt="Customers" class="nav-icon">
+                    Customers
+                </a><a href="admin-configurations.html" class="nav-item">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+            </div>
+            
+            <!-- Footer Text -->
+            <div class="sidebar-footer">
+                <p>Developed by ESoft UNI Bit 004 Project Group 04</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">Customer Details</h1>
+                </div>
+                <div class="header-right">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning</span>
+                        <div class="date-time">
+                            <span id="currentDate">25 May 2025</span>
+                            <span id="currentTime">22:45:04</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Header -->
+            <div class="content-header">
+                <div class="page-header">
+                    <div class="page-header-info">
+                        <h2>Customer Information</h2>
+                        <p>View and manage customer details and purchase history</p>
+                    </div>
+                    <div class="page-header-actions">
+                        <button class="btn btn-danger" id="deleteCustomerBtn">
+                            <span>🗑️</span>
+                            Delete Customer
+                        </button>
+                        <button class="btn btn-primary" id="editCustomerBtn">
+                            <span>✏️</span>
+                            Edit Customer
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Body -->
+            <div class="content-body">                <!-- Customer Information Cards -->
+                <div class="info-section">
+                    <div style="display: flex; gap: 20px;">
+                        <!-- Read-only Information Container -->
+                        <div class="info-card" style="flex: 1;">
+                            <div class="info-content">
+                                <div class="info-row">
+                                    <span class="info-label">Customer ID:</span>
+                                    <span class="info-value" id="customerId">Loading...</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Age:</span>
+                                    <span class="info-value" id="customerAge">Loading...</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Registered Date:</span>
+                                    <span class="info-value" id="customerRegDate">Loading...</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Customer Since:</span>
+                                    <span class="info-value" id="customerSince">Loading...</span>
+                                </div>
+                            </div>
+                        </div>                        <!-- Customer Information Container -->
+                        <div class="info-card" style="flex: 1;">
+                            <div class="info-content">
+                                <div class="info-row">
+                                    <span class="info-label">Full Name:</span>
+                                    <span class="info-value" id="customerFullName">Loading...</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Date of Birth:</span>
+                                    <span class="info-value" id="customerDob">Loading...</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Phone Number:</span>
+                                    <span class="info-value" id="customerPhone">Loading...</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Address:</span>
+                                    <span class="info-value" id="customerAddress">Loading...</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Email:</span>
+                                    <span class="info-value" id="customerEmail">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Purchase Summary Cards -->
+                <div class="medicine-details-section">
+                    <div class="medicine-form-card">
+                        <div class="form-section">
+                            <h3>📊 Purchase Summary</h3>                            <div class="form-grid sale-summary">
+                                <div class="summary-item">
+                                    <span class="summary-label">Total Purchases:</span>
+                                    <span class="summary-value" id="totalPurchases">Loading...</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Total Amount Spent:</span>
+                                    <span class="summary-value" id="totalAmountSpent">Loading...</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Last Purchase:</span>
+                                    <span class="summary-value" id="lastPurchase">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Purchase History Table -->
+                <div class="table-section">
+                    <div class="table-header">
+                        <h3>🛍️ Purchase History</h3>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="medicine-table">                            <thead>
+                                <tr>
+                                    <th>Sale ID</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Items</th>
+                                    <th>Amount</th>
+                                    <th>User</th>
+                                </tr>
+                            </thead>
+                            <tbody id="purchaseHistoryTable">
+                                <!-- Purchase history will be populated by JavaScript -->
+                            </tbody>
+                        </table>                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <!-- Save button moved to editable container -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Customer Modal -->
+    <div id="editCustomerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Customer</h2>
+                <span class="close" id="editModalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="customer-form">
+                    <div style="width: 100%;">
+                        <div class="info-row">
+                            <span class="info-label">Full Name:</span>
+                            <input type="text" class="form-input" id="editFullName" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Date of Birth:</span>
+                            <input type="date" class="form-input" id="editDob" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Phone Number:</span>
+                            <input type="tel" class="form-input" id="editPhone" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Email:</span>
+                            <input type="email" class="form-input" id="editEmail" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Address:</span>
+                            <textarea class="form-input" id="editAddress" rows="3" style="text-align: left; resize: vertical;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="editModalCancel">Cancel</button>
+                <button class="btn btn-primary" id="editModalSave">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin-inside-customer.js" defer></script>
+</body>
+</html> 
+

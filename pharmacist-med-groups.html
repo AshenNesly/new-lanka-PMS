@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Medicine Groups - New Lanka Pharmacy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/modal-styles.css">
+    <script src="js/universal-session-manager.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="icons/pharmacy-logo.png" alt="New Lanka Pharmacy" class="logo">
+                <span class="brand-name">New Lanka</span>
+            </div>
+            
+            <!-- Pharmacist Profile Section -->
+            <div class="admin-section">
+                <div class="admin-profile-sidebar">
+                    <img src="profile.jpg" alt="Pharmacist" class="admin-avatar">
+                    <div class="admin-info">
+                        <h4>Pharmacist</h4>
+                        <span>Pharmacist</span>
+                    </div>
+                    <div class="admin-menu">
+                        <button class="admin-menu-btn" id="adminMenuBtn">⋮</button>
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span class="logout-icon">🚪</span>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <div class="nav-menu">
+                <a href="pharmacist-cashier.html" class="nav-item">
+                    <img src="icons/casheir.png" alt="Cashier" class="nav-icon">
+                    Cashier
+                </a>
+                <a href="pharmacist-inventory.html" class="nav-item active">
+                    <img src="icons/inventory.png" alt="Inventory" class="nav-icon">
+                    Inventory
+                </a>
+                <a href="pharmacist-sales.html" class="nav-item">
+                    <img src="icons/history.png" alt="Sales History" class="nav-icon">
+                    Sales History
+                </a>
+                <a href="pharmacist-customers.html" class="nav-item">
+                    <img src="icons/customer.png" alt="Customers" class="nav-icon">
+                    Customers
+                </a>
+                <a href="pharmacist-configurations.html" class="nav-item">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+                </a>
+                <a href="pharmacist-configurations.html" class="nav-item">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+            </div>
+            
+            <!-- Footer Text -->
+            <div class="sidebar-footer">
+                <p>Developed by ESoft UNI Bit 004 Project Group 04</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">Medicine Groups</h1>
+                </div>
+                <div class="header-right">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning</span>
+                        <div class="date-time">
+                            <span id="currentDate">25 May 2025</span>
+                            <span id="currentTime">22:45:04</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Header -->
+            <div class="content-header">
+            </div>
+
+            <!-- Content Body -->
+            <div class="content-body">
+                <!-- Medicine Groups Table Section -->
+                <div class="table-section">
+                    <div class="table-header">
+                        <h3>All Medicine Groups (<span id="groupsCount">24</span> groups)</h3>
+                        <div class="table-actions">
+                            <div class="search-container">
+                                <input type="text" id="searchGroups" class="search-input" placeholder="Search groups..." onkeyup="searchGroups()">
+                                <button class="btn btn-secondary" onclick="clearSearch()">
+                                    <span>🔍</span>
+                                    Clear
+                                </button>
+                            </div>
+                            <button class="btn btn-primary" id="addGroupBtn">
+                                <span>➕</span>
+                                Add New Group
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="medicine-table">                            <thead>
+                                <tr>
+                                    <th>Group ID</th>
+                                    <th>Group Name</th>
+                                    <th>Description</th>
+                                    <th>Medicines Count</th>
+                                    <th>Total Stock</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>                                <tr>
+                                    <td>GRP001</td>
+                                    <td><a href="pharmacist-inside-med-group.html?id=GRP001&name=Pain%20Relief&count=45&stock=1250&status=active" class="medicine-link">Pain Relief</a></td>
+                                    <td>Medications for pain management and relief</td>
+                                    <td>45</td>
+                                    <td>1,250</td>
+                                    <td><span class="status-badge good">Active</span></td>
+                                </tr>                                <tr>
+                                    <td>GRP002</td>
+                                    <td><a href="pharmacist-inside-med-group.html?id=GRP002&name=Antibiotics&count=38&stock=890&status=active" class="medicine-link">Antibiotics</a></td>
+                                    <td>Antimicrobial medications for bacterial infections</td>
+                                    <td>38</td>
+                                    <td>890</td>
+                                    <td><span class="status-badge good">Active</span></td>
+                                </tr>                                <tr>
+                                    <td>GRP003</td>
+                                    <td><a href="pharmacist-inside-med-group.html?id=GRP003&name=Antacids&count=22&stock=675&status=active" class="medicine-link">Antacids</a></td>
+                                    <td>Medications for stomach acidity and heartburn</td>
+                                    <td>22</td>
+                                    <td>675</td>
+                                    <td><span class="status-badge good">Active</span></td>
+                                </tr>                                <tr>
+                                    <td>GRP004</td>
+                                    <td><a href="pharmacist-inside-med-group.html?id=GRP004&name=Diabetes&count=15&stock=420&status=active" class="medicine-link">Diabetes</a></td>
+                                    <td>Medications for diabetes management</td>
+                                    <td>15</td>
+                                    <td>420</td>
+                                    <td><span class="status-badge good">Active</span></td>
+                                </tr>                                <tr>
+                                    <td>GRP005</td>
+                                    <td><a href="pharmacist-inside-med-group.html?id=GRP005&name=Hypertension&count=28&stock=785&status=active" class="medicine-link">Hypertension</a></td>
+                                    <td>Blood pressure management medications</td>
+                                    <td>28</td>
+                                    <td>785</td>
+                                    <td><span class="status-badge good">Active</span></td>
+                                </tr>                                <tr>
+                                    <td>GRP006</td>
+                                    <td><a href="pharmacist-inside-med-group.html?id=GRP006&name=Antihistamines&count=18&stock=320&status=active" class="medicine-link">Antihistamines</a></td>
+                                    <td>Allergy and histamine reaction medications</td>
+                                    <td>18</td>
+                                    <td>320</td>
+                                    <td><span class="status-badge good">Active</span></td>
+                                </tr>                                <tr>
+                                    <td>GRP007</td>
+                                    <td><a href="pharmacist-inside-med-group.html?id=GRP007&name=Vitamins&count=32&stock=980&status=active" class="medicine-link">Vitamins</a></td>
+                                    <td>Vitamin supplements and nutritional support</td>
+                                    <td>32</td>
+                                    <td>980</td>
+                                    <td><span class="status-badge good">Active</span></td>
+                                </tr>                                <tr>
+                                    <td>GRP008</td>
+                                    <td><a href="pharmacist-inside-med-group.html?id=GRP008&name=Respiratory&count=12&stock=180&status=warning" class="medicine-link">Respiratory</a></td>
+                                    <td>Respiratory system medications</td>
+                                    <td>12</td>
+                                    <td>180</td>
+                                    <td><span class="status-badge warning">Low Stock</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button class="pagination-btn" disabled>Previous</button>
+                        <span class="pagination-info">Page 1 of 3</span>
+                        <button class="pagination-btn">Next</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add New Group Modal -->
+    <div class="modal" id="addGroupModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Medicine Group</h3>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addGroupForm">
+                    <div class="form-group">
+                        <label for="groupName">Group Name</label>
+                        <input type="text" id="groupName" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="groupDescription">Description</label>
+                        <textarea id="groupDescription" class="form-input" rows="3" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                <button type="submit" class="btn btn-primary" id="saveGroupBtn">Save Group</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/pharmacist-med-groups.js" defer></script>
+</body>
+</html>
+
+
+
+

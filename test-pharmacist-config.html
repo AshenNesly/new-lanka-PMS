@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacist Configuration Test</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; }
+        .section { margin: 20px 0; padding: 20px; border-radius: 4px; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        button { padding: 12px 20px; margin: 5px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px; }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .profile-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd; }
+        .profile-section { text-align: center; margin: 20px 0; }
+        input[type="file"] { margin: 10px 0; }
+        .result { padding: 15px; margin: 10px 0; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Pharmacist Configuration Test</h1>
+        
+        <div class="section info">
+            <h3>Test Instructions:</h3>
+            <p>This page tests the pharmacist configuration functionality:</p>
+            <ol>
+                <li>Load pharmacist profile information</li>
+                <li>Test profile picture upload</li>
+                <li>Test profile update</li>
+            </ol>
+        </div>
+        
+        <div class="section">
+            <h3>📋 API Tests</h3>
+            <button class="btn-primary" onclick="testGetProfile()">Test Get Profile</button>
+            <button class="btn-primary" onclick="testGetStats()">Test Get Stats</button>
+            <div id="apiResults"></div>
+        </div>
+        
+        <div class="section">
+            <h3>👤 Current Pharmacist Profile</h3>
+            <div class="profile-section">
+                <img id="profileImg" src="img/default-profile.png" alt="Profile" class="profile-img">
+                <br>
+                <strong>Name:</strong> <span id="userName">Loading...</span><br>
+                <strong>Role:</strong> <span id="userRole">Loading...</span><br>
+                <strong>Profile Image:</strong> <span id="profilePath">Loading...</span>
+            </div>
+            
+            <h4>🖼️ Upload Test</h4>
+            <input type="file" id="photoInput" accept="image/*">
+            <button class="btn-success" onclick="testUpload()">Test Upload</button>
+            
+            <div id="uploadResults"></div>
+        </div>
+        
+        <div class="section">
+            <h3>✏️ Profile Update Test</h3>
+            <div>
+                <label>New Name: <input type="text" id="newName" placeholder="Enter new name"></label><br><br>
+                <label>Current Password: <input type="password" id="currentPassword" placeholder="Current password"></label><br><br>
+                <label>New Password: <input type="password" id="newPassword" placeholder="New password (optional)"></label><br><br>
+                <button class="btn-primary" onclick="testUpdateProfile()">Test Update Profile</button>
+            </div>
+            <div id="updateResults"></div>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE_URL = 'php/pharmacist-configurations.php';
+        
+        // Test get profile
+        async function testGetProfile() {
+            try {
+                const response = await fetch(`${API_BASE_URL}?action=get_pharmacist_profile`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const user = data.data;
+                    document.getElementById('userName').textContent = user.user_name;
+                    document.getElementById('userRole').textContent = user.role;
+                    document.getElementById('profilePath').textContent = user.profile_img;
+                    
+                    // Update profile image
+                    const img = document.getElementById('profileImg');
+                    img.src = user.profile_img + '?t=' + Date.now();
+                    
+                    showResult('apiResults', 'Profile loaded successfully!', 'success');
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                showResult('apiResults', 'Error: ' + error.message, 'error');
+            }
+        }
+        
+        // Test get stats
+        async function testGetStats() {
+            try {
+                const response = await fetch(`${API_BASE_URL}?action=get_user_stats`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const stats = data.data;
+                    let message = `Stats loaded! Medicines: ${stats.total_medicines}, Sales Today: ${stats.sales_today}`;
+                    showResult('apiResults', message, 'success');
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                showResult('apiResults', 'Stats Error: ' + error.message, 'error');
+            }
+        }
+        
+        // Test upload
+        async function testUpload() {
+            const fileInput = document.getElementById('photoInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select a file first');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('action', 'upload_pharmacist_photo');
+            formData.append('profile_photo', file);
+            
+            try {
+                const response = await fetch(API_BASE_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResult('uploadResults', 'Upload successful! Path: ' + data.image_path, 'success');
+                    // Refresh profile
+                    setTimeout(() => testGetProfile(), 1000);
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                showResult('uploadResults', 'Upload Error: ' + error.message, 'error');
+            }
+        }
+        
+        // Test update profile
+        async function testUpdateProfile() {
+            const newName = document.getElementById('newName').value.trim();
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            
+            if (!newName) {
+                alert('Please enter a new name');
+                return;
+            }
+            
+            const body = new URLSearchParams({
+                action: 'update_pharmacist_profile',
+                user_name: newName
+            });
+            
+            if (newPassword) {
+                body.append('current_password', currentPassword);
+                body.append('new_password', newPassword);
+            }
+            
+            try {
+                const response = await fetch(API_BASE_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: body
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResult('updateResults', 'Profile updated successfully!', 'success');
+                    // Refresh profile
+                    setTimeout(() => testGetProfile(), 1000);
+                } else {
+                    throw new Error(data.error);
+                }
+            } catch (error) {
+                showResult('updateResults', 'Update Error: ' + error.message, 'error');
+            }
+        }
+        
+        function showResult(containerId, message, type) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `<div class="result ${type}">${message}</div>`;
+        }
+        
+        // Load profile on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            testGetProfile();
+        });
+    </script>
+</body>
+</html>

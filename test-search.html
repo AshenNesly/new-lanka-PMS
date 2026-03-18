@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Search API</title>
+</head>
+<body>
+    <h2>Test Search Functionality</h2>
+    <input type="text" id="testSearch" placeholder="Enter search term">
+    <button onclick="testSearchAPI()">Test Search</button>
+    <div id="result"></div>
+
+    <script>
+        async function testSearchAPI() {
+            const searchTerm = document.getElementById('testSearch').value.trim();
+            const resultDiv = document.getElementById('result');
+            
+            if (!searchTerm) {
+                resultDiv.innerHTML = '<p style="color: red;">Please enter a search term</p>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<p>Testing search for: "' + searchTerm + '"</p>';
+            
+            try {
+                const url = `php/admin-full-med-list.php?action=get_medicines_list&search=${encodeURIComponent(searchTerm)}&page=1&limit=20`;
+                console.log('Testing URL:', url);
+                
+                const response = await fetch(url);
+                console.log('Response status:', response.status);
+                
+                const data = await response.json();
+                console.log('Response data:', data);
+                
+                if (data.success) {
+                    const medicines = data.data.medicines;
+                    let html = `<h3>Search Results (${medicines.length} found):</h3>`;
+                    
+                    if (medicines.length === 0) {
+                        html += '<p>No medicines found matching your search.</p>';
+                    } else {
+                        html += '<ul>';
+                        medicines.forEach(med => {
+                            html += `<li><strong>${med.medicine_name}</strong> - ${med.medicine_brand} (${med.category})</li>`;
+                        });
+                        html += '</ul>';
+                    }
+                    
+                    resultDiv.innerHTML = html;
+                } else {
+                    resultDiv.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                console.error('Test error:', error);
+                resultDiv.innerHTML = `<p style="color: red;">Exception: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

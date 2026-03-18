@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Admin Full Medicine List Backend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 4px;
+            border-left: 4px solid #007bff;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Full Medicine List Backend API Test</h1>
+        
+        <div class="test-section">
+            <h3>1. Test Get Medicines List</h3>
+            <button onclick="testGetMedicinesList()">Get Medicines List (Page 1)</button>
+            <button onclick="testGetMedicinesListPage2()">Get Medicines List (Page 2)</button>
+            <div id="medicinesListResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>2. Test Search Medicines</h3>
+            <input type="text" id="searchTerm" placeholder="Enter search term" value="aspirin">
+            <button onclick="testSearchMedicines()">Search Medicines</button>
+            <div id="searchResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>3. Test Add New Medicine</h3>
+            <div class="form-group">
+                <label>Medicine Name:</label>
+                <input type="text" id="newMedicineName" value="Test Medicine API">
+            </div>
+            <div class="form-group">
+                <label>Brand:</label>
+                <input type="text" id="newMedicineBrand" value="Test Brand Ltd.">
+            </div>
+            <div class="form-group">
+                <label>Category:</label>
+                <select id="newMedicineCategory">
+                    <option value="">Select Category</option>
+                    <option value="Pain Relief">Pain Relief</option>
+                    <option value="Antibiotic">Antibiotic</option>
+                    <option value="Vitamin" selected>Vitamin</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Stock:</label>
+                <input type="number" id="newMedicineStock" value="25">
+            </div>
+            <div class="form-group">
+                <label>Price:</label>
+                <input type="number" id="newMedicinePrice" step="0.01" value="15.50">
+            </div>
+            <div class="form-group">
+                <label>How to Use:</label>
+                <textarea id="newMedicineHowToUse">Take 1 tablet daily with food</textarea>
+            </div>
+            <div class="form-group">
+                <label>Side Effects:</label>
+                <textarea id="newMedicineSideEffects">Mild stomach upset possible</textarea>
+            </div>
+            <button onclick="testAddMedicine()">Add Medicine</button>
+            <div id="addMedicineResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>4. Test Medicine Statistics</h3>
+            <button onclick="testMedicineStats()">Get Medicine Statistics</button>
+            <div id="statsResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>5. Test Update Medicine</h3>
+            <div class="form-group">
+                <label>Medicine ID to Update:</label>
+                <input type="number" id="updateMedicineId" value="1">
+            </div>
+            <div class="form-group">
+                <label>New Medicine Name:</label>
+                <input type="text" id="updateMedicineName" value="Updated Medicine Name">
+            </div>
+            <div class="form-group">
+                <label>New Stock:</label>
+                <input type="number" id="updateMedicineStock" value="100">
+            </div>
+            <button onclick="testUpdateMedicine()">Update Medicine</button>
+            <div id="updateMedicineResult" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'php/admin-full-med-list.php';
+
+        async function makeAPICall(action, method = 'GET', data = null) {
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+
+                let url = API_BASE_URL;
+                
+                if (method === 'GET' || method === 'DELETE') {
+                    const params = new URLSearchParams({ action, ...data });
+                    url += '?' + params.toString();
+                } else {
+                    options.body = JSON.stringify({ action, ...data });
+                }
+
+                const response = await fetch(url, options);
+                const result = await response.json();
+                
+                return {
+                    success: response.ok && result.success,
+                    data: result,
+                    status: response.status
+                };
+            } catch (error) {
+                return {
+                    success: false,
+                    error: error.message
+                };
+            }
+        }
+
+        async function testGetMedicinesList() {
+            const result = await makeAPICall('get_medicines_list', 'GET', { page: 1, limit: 10 });
+            const resultDiv = document.getElementById('medicinesListResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Medicines List Result (Page 1):</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+        }
+
+        async function testGetMedicinesListPage2() {
+            const result = await makeAPICall('get_medicines_list', 'GET', { page: 2, limit: 5 });
+            const resultDiv = document.getElementById('medicinesListResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Medicines List Result (Page 2):</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+        }
+
+        async function testSearchMedicines() {
+            const searchTerm = document.getElementById('searchTerm').value;
+            const result = await makeAPICall('search_medicines', 'GET', { search: searchTerm });
+            const resultDiv = document.getElementById('searchResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Search Result for "${searchTerm}":</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+        }
+
+        async function testAddMedicine() {
+            const medicineData = {
+                medicine_name: document.getElementById('newMedicineName').value,
+                medicine_brand: document.getElementById('newMedicineBrand').value,
+                category: document.getElementById('newMedicineCategory').value,
+                stock_left: parseInt(document.getElementById('newMedicineStock').value),
+                medicine_price: parseFloat(document.getElementById('newMedicinePrice').value),
+                how_to_use: document.getElementById('newMedicineHowToUse').value,
+                side_effects: document.getElementById('newMedicineSideEffects').value
+            };
+
+            const result = await makeAPICall('add_medicine', 'POST', medicineData);
+            const resultDiv = document.getElementById('addMedicineResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Add Medicine Result:</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+        }
+
+        async function testMedicineStats() {
+            const result = await makeAPICall('get_medicine_stats');
+            const resultDiv = document.getElementById('statsResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Medicine Statistics Result:</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+        }
+
+        async function testUpdateMedicine() {
+            const updateData = {
+                medicine_id: parseInt(document.getElementById('updateMedicineId').value),
+                medicine_name: document.getElementById('updateMedicineName').value,
+                medicine_brand: 'Updated Brand',
+                category: 'Vitamins',
+                stock_left: parseInt(document.getElementById('updateMedicineStock').value),
+                medicine_price: 20.00,
+                how_to_use: 'Updated usage instructions',
+                side_effects: 'Updated side effects'
+            };
+
+            const result = await makeAPICall('update_medicine', 'POST', updateData);
+            const resultDiv = document.getElementById('updateMedicineResult');
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `
+                <h4>Update Medicine Result:</h4>
+                <pre>${JSON.stringify(result, null, 2)}</pre>
+            `;
+        }
+
+        // Auto-load medicines list on page load
+        window.addEventListener('load', function() {
+            testGetMedicinesList();
+        });
+    </script>
+</body>
+</html>

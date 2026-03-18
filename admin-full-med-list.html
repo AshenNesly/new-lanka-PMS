@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Full Medicine List - New Lanka Pharmacy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/modal-styles.css">
+    <script src="js/universal-session-manager.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="icons/pharmacy-logo.png" alt="New Lanka Pharmacy" class="logo">
+                <span class="brand-name">New Lanka</span>
+            </div>
+              <!-- Admin Profile Section -->
+            <div class="admin-section">
+                <div class="admin-profile-sidebar">
+                    <img src="profile.jpg" alt="Admin" class="admin-avatar">
+                    <div class="admin-info">
+                        <h4>Admin</h4>
+                        <span>Admin</span>
+                    </div>
+                    <div class="admin-menu">
+                        <button class="admin-menu-btn" id="adminMenuBtn">⋮</button>
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span class="logout-icon">🚪</span>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>            <div class="nav-menu">
+                <a href="admin-dashboard.html" class="nav-item">
+                    <img src="icons/dashboard.png" alt="Dashboard" class="nav-icon">
+                    Dashboard
+                </a>
+                <a href="admin-cashier.html" class="nav-item">
+                    <img src="icons/casheir.png" alt="Cashier" class="nav-icon">
+                    Cashier
+                </a>
+                <a href="admin-inventory.html" class="nav-item active">
+                    <img src="icons/inventory.png" alt="Inventory" class="nav-icon">
+                    Inventory
+                </a>
+                <a href="admin-sales.html" class="nav-item">
+                    <img src="icons/history.png" alt="Sales History" class="nav-icon">
+                    Sales History
+                </a>
+                <a href="admin-reports.html" class="nav-item">
+                    <img src="icons/reports.png" alt="Reports" class="nav-icon">
+                    Reports
+                </a>
+                <a href="admin-customers.html" class="nav-item">
+                    <img src="icons/customer.png" alt="Customers" class="nav-icon">
+                    Customers
+                </a>
+                <a href="admin-configurations.html" class="nav-item">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+            </div>
+            
+            <!-- Footer Text -->
+            <div class="sidebar-footer">
+                <p>Developed by ESoft UNI Bit 004 Project Group 04</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">Full Medicine List</h1>
+                </div>
+                <div class="header-right">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning</span>
+                        <div class="date-time">
+                            <span id="currentDate">25 May 2025</span>
+                            <span id="currentTime">22:45:04</span>
+                        </div>
+                    </div>
+                </div>
+            </header>            <!-- Content Header -->
+            <div class="content-header">
+            </div>
+
+            <!-- Content Body -->
+            <div class="content-body">
+                <!-- Medicine Table Section -->
+                <div class="table-section">
+                    <div class="table-header">
+                        <h3>All Medicines (298 items)</h3>                        <div class="table-actions">
+                            <div class="search-container">
+                                <input type="text" id="searchMedicine" class="search-input" placeholder="Search medicines..." onkeyup="searchMedicines()">
+                                <button class="btn btn-secondary" onclick="clearSearch()">
+                                    <span>🔍</span>
+                                    Clear
+                                </button>
+                            </div>
+                            <button class="btn btn-primary" id="addMedicineBtn">
+                                <span>➕</span>
+                                Add New Medicine
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="medicine-table">                            <thead>
+                                <tr>
+                                    <th>Medicine ID</th>
+                                    <th>Medicine Name</th>
+                                    <th>Category</th>
+                                    <th>Stock</th>
+                                    <th>Price</th>
+                                    <th>Brand</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>                            <tbody>
+                                <tr>
+                                    <td>MED001</td>
+                                    <td><a href="admin-inside-med.html?id=MED001&name=Paracetamol%20500mg&category=Pain%20Relief&stock=150&price=Rs.%2025.00&expiry=2025-12-31&supplier=MediSupply%20Co.&status=in-stock" class="medicine-link">Paracetamol 500mg</a></td>
+                                    <td>Pain Relief</td>
+                                    <td>150</td>
+                                    <td>Rs. 25.00</td>
+                                    <td>MediSupply Co.</td>
+                                    <td><span class="status-badge good">In Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED002</td>
+                                    <td><a href="admin-inside-med.html?id=MED002&name=Amoxicillin%20250mg&category=Antibiotic&stock=75&price=Rs.%2045.00&expiry=2025-08-15&supplier=PharmaCorp%20Ltd.&status=in-stock" class="medicine-link">Amoxicillin 250mg</a></td>
+                                    <td>Antibiotic</td>
+                                    <td>75</td>
+                                    <td>Rs. 45.00</td>
+                                    <td>PharmaCorp Ltd.</td>
+                                    <td><span class="status-badge good">In Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED003</td>
+                                    <td><a href="admin-inside-med.html?id=MED003&name=Ibuprofen%20400mg&category=Pain%20Relief&stock=5&price=Rs.%2035.00&expiry=2025-09-20&supplier=HealthMax%20Inc.&status=low-stock" class="medicine-link">Ibuprofen 400mg</a></td>
+                                    <td>Pain Relief</td>
+                                    <td>5</td>
+                                    <td>Rs. 35.00</td>
+                                    <td>HealthMax Inc.</td>
+                                    <td><span class="status-badge warning">Low Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED004</td>
+                                    <td><a href="admin-inside-med.html?id=MED004&name=Aspirin%20100mg&category=Pain%20Relief&stock=0&price=Rs.%2020.00&expiry=2025-11-10&supplier=MediSupply%20Co.&status=out-of-stock" class="medicine-link">Aspirin 100mg</a></td>
+                                    <td>Pain Relief</td>
+                                    <td>0</td>
+                                    <td>Rs. 20.00</td>
+                                    <td>MediSupply Co.</td>
+                                    <td><span class="status-badge danger">Out of Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED005</td>
+                                    <td><a href="admin-inside-med.html?id=MED005&name=Cetirizine%2010mg&category=Antihistamine&stock=95&price=Rs.%2018.00&expiry=2026-01-15&supplier=AllerMed%20Ltd.&status=in-stock" class="medicine-link">Cetirizine 10mg</a></td>
+                                    <td>Antihistamine</td>
+                                    <td>95</td>
+                                    <td>Rs. 18.00</td>
+                                    <td>AllerMed Ltd.</td>
+                                    <td><span class="status-badge good">In Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED006</td>
+                                    <td><a href="admin-inside-med.html?id=MED006&name=Omeprazole%2020mg&category=Antacid&stock=120&price=Rs.%2055.00&expiry=2025-10-30&supplier=GastroHealth%20Co.&status=in-stock" class="medicine-link">Omeprazole 20mg</a></td>
+                                    <td>Antacid</td>
+                                    <td>120</td>
+                                    <td>Rs. 55.00</td>
+                                    <td>GastroHealth Co.</td>
+                                    <td><span class="status-badge good">In Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED007</td>
+                                    <td><a href="admin-inside-med.html?id=MED007&name=Metformin%20500mg&category=Diabetes&stock=200&price=Rs.%2012.00&expiry=2025-07-22&supplier=DiabeCare%20Inc.&status=in-stock" class="medicine-link">Metformin 500mg</a></td>
+                                    <td>Diabetes</td>
+                                    <td>200</td>
+                                    <td>Rs. 12.00</td>
+                                    <td>DiabeCare Inc.</td>
+                                    <td><span class="status-badge good">In Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED008</td>
+                                    <td><a href="admin-inside-med.html?id=MED008&name=Amlodipine%205mg&category=Hypertension&stock=85&price=Rs.%2030.00&expiry=2025-12-05&supplier=CardioMed%20Ltd.&status=in-stock" class="medicine-link">Amlodipine 5mg</a></td>
+                                    <td>Hypertension</td>
+                                    <td>85</td>
+                                    <td>Rs. 30.00</td>
+                                    <td>CardioMed Ltd.</td>
+                                    <td><span class="status-badge good">In Stock</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button class="pagination-btn" disabled>Previous</button>
+                        <span class="pagination-info">Page 1 of 15</span>
+                        <button class="pagination-btn">Next</button>
+                    </div>
+                </div>
+            </div>        </main>
+    </div>    <!-- Add New Medicine Modal -->
+    <div id="medicineModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Medicine</h2>
+                <span class="close" id="modalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="user-form">
+                    <!-- Medicine Details Section -->
+                    <div style="width: 100%;">
+                        <div class="info-row">
+                            <span class="info-label">Medicine Name:</span>
+                            <input type="text" class="form-input" id="modalMedicineName" placeholder="Enter medicine name" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Category:</span>
+                            <select class="form-input" id="modalCategory" style="text-align: left;">
+                                <option value="">Select Category</option>
+                                <option value="Pain Relief">Pain Relief</option>
+                                <option value="Antibiotic">Antibiotic</option>
+                                <option value="Antihistamine">Antihistamine</option>
+                                <option value="Antacid">Antacid</option>
+                                <option value="Diabetes">Diabetes</option>
+                                <option value="Hypertension">Hypertension</option>
+                                <option value="Vitamin">Vitamin</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Stock Quantity:</span>
+                            <input type="number" class="form-input" id="modalStock" placeholder="Enter stock quantity" min="0" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Price (Rs.):</span>
+                            <input type="number" class="form-input" id="modalPrice" placeholder="Enter price" min="0" step="0.01" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Brand/Supplier:</span>
+                            <input type="text" class="form-input" id="modalBrand" placeholder="Enter brand or supplier" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">How to Use:</span>
+                            <textarea class="form-input" id="modalHowToUse" placeholder="Enter usage instructions" rows="3" style="text-align: left; resize: vertical;"></textarea>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Side Effects:</span>
+                            <textarea class="form-input" id="modalSideEffects" placeholder="Enter side effects" rows="3" style="text-align: left; resize: vertical;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modalCancel">Cancel</button>
+                <button class="btn btn-primary" id="modalSave">Save Medicine</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/admin-full-med-list.js" defer></script>
+</body>
+</html>  
+

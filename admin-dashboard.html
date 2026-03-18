@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Admin Dashboard - New Lanka Pharmacy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/universal-session-manager.js" defer></script>
+    <script src="js/user-profile-manager.js" defer></script>
+    <script src="js/admin-dashboard.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="icons/pharmacy-logo.png" alt="New Lanka Pharmacy" class="logo">
+                <span class="brand-name">New Lanka</span>
+            </div>            <!-- Admin Profile Section -->
+            <div class="admin-section">
+                <div class="admin-profile-sidebar">
+                    <img src="img/default-profile.png" alt="Admin" class="admin-avatar" id="sidebarAdminAvatar">
+                    <div class="admin-info">
+                        <h4 id="sidebarAdminName">Admin</h4>
+                        <span class="user-role">Admin</span>
+                    </div>
+                    <div class="admin-menu">
+                        <button class="admin-menu-btn" id="adminMenuBtn">⋮</button>
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span class="logout-icon">🚪</span>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+              <div class="nav-menu">
+                <a href="admin-dashboard.html" class="nav-item active">
+                    <img src="icons/dashboard.png" alt="Dashboard" class="nav-icon">
+                    Dashboard
+                </a>
+                <a href="admin-cashier.html" class="nav-item">
+                    <img src="icons/casheir.png" alt="Cashier" class="nav-icon">
+                    Cashier
+                </a>
+                <a href="admin-inventory.html" class="nav-item">
+                    <img src="icons/inventory.png" alt="Inventory" class="nav-icon">
+                    Inventory
+                </a>
+                <a href="admin-sales.html" class="nav-item">
+                    <img src="icons/history.png" alt="Sales History" class="nav-icon">
+                    Sales History
+                </a>
+                <a href="admin-reports.html" class="nav-item">
+                    <img src="icons/reports.png" alt="Reports" class="nav-icon">
+                    Reports
+                </a>
+                <a href="admin-customers.html" class="nav-item">
+                    <img src="icons/customer.png" alt="Customers" class="nav-icon">
+                    Customers
+                </a>
+                <a href="admin-configurations.html" class="nav-item">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+            </div>
+            
+            <!-- Footer Text -->
+            <div class="sidebar-footer">
+                <p>Developed by ESoft UNI Bit 004 Project Group 04</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning</span>
+                        <div class="date-time">
+                            <span id="currentDate">25 May 2025</span>
+                            <span id="currentTime">22:45:04</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Header -->
+            <div class="content-header">
+            </div>
+
+            <!-- Content Body -->
+            <div class="content-body">
+                <!-- Statistics Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card good" id="inventoryCard">
+                        <div class="stat-icon icon-shield"></div>
+                        <div class="stat-value" id="inventoryStatus">Loading...</div>
+                        <div class="stat-label">Inventory Status</div>
+                        <a href="admin-inventory-report.html" class="card-action">
+                            View Detailed Report
+                            <span class="icon-arrow"></span>
+                        </a>
+                    </div>
+
+                    <div class="stat-card warning" id="salesCard">
+                        <div class="stat-icon icon-money"></div>
+                        <div class="stat-value" id="salesAmount">Loading...</div>
+                        <div class="stat-label" id="salesPeriod">Sales : Loading...</div>
+                        <a href="admin-total-sales-report.html" class="card-action">
+                            View Detailed Report
+                            <span class="icon-arrow"></span>
+                        </a>
+                    </div>
+
+                    <div class="stat-card info" id="medicinesCard">
+                        <div class="stat-icon icon-medical"></div>
+                        <div class="stat-value" id="totalMedicines">Loading...</div>
+                        <div class="stat-label">Medicines Available</div>
+                        <a href="admin-full-med-list.html" class="card-action">
+                            Visit Inventory
+                            <span class="icon-arrow"></span>
+                        </a>
+                    </div>
+
+                    <div class="stat-card danger" id="shortageCard">
+                        <div class="stat-icon icon-warning"></div>
+                        <div class="stat-value" id="shortageCount">Loading...</div>
+                        <div class="stat-label">Medicine Shortage</div>
+                        <a href="admin-med-shortage.html" class="card-action" id="shortageAction">
+                            Resolve Now
+                            <span class="icon-arrow"></span>
+                        </a>
+                    </div>
+                </div>                <!-- Information Cards -->
+                <div class="info-grid">
+                </div>
+            </div>
+        </main>
+    </div>    <script src="js/admin-dashboard.js" defer></script>
+</body>
+</html>

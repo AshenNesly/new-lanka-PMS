@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Shortage - New Lanka Pharmacy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/universal-session-manager.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="icons/pharmacy-logo.png" alt="New Lanka Pharmacy" class="logo">
+                <span class="brand-name">New Lanka</span>
+            </div>
+            
+            <!-- Pharmacist Profile Section -->
+            <div class="admin-section">
+                <div class="admin-profile-sidebar">
+                    <img src="profile.jpg" alt="Pharmacist" class="admin-avatar">
+                    <div class="admin-info">
+                        <h4>Pharmacist</h4>
+                        <span>Pharmacist</span>
+                    </div>
+                    <div class="admin-menu">
+                        <button class="admin-menu-btn" id="adminMenuBtn">⋮</button>
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span class="logout-icon">🚪</span>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <div class="nav-menu">
+                <a href="pharmacist-cashier.html" class="nav-item">
+                    <img src="icons/casheir.png" alt="Cashier" class="nav-icon">
+                    Cashier
+                </a>
+                <a href="pharmacist-inventory.html" class="nav-item active">
+                    <img src="icons/inventory.png" alt="Inventory" class="nav-icon">
+                    Inventory
+                </a>
+                <a href="pharmacist-sales.html" class="nav-item">
+                    <img src="icons/history.png" alt="Sales History" class="nav-icon">
+                    Sales History
+                </a>
+                <a href="pharmacist-customers.html" class="nav-item">
+                    <img src="icons/customer.png" alt="Customers" class="nav-icon">
+                    Customers
+                </a>
+                <a href="pharmacist-configurations.html" class="nav-item">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+            </div>
+            
+            <!-- Footer Text -->
+            <div class="sidebar-footer">
+                <p>Developed by ESoft UNI Bit 004 Project Group 04</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">Medicine Shortage</h1>
+                </div>
+                <div class="header-right">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning</span>
+                        <div class="date-time">
+                            <span id="currentDate">25 May 2025</span>
+                            <span id="currentTime">22:45:04</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Header -->
+            <div class="content-header">
+            </div>
+
+            <!-- Content Body -->
+            <div class="content-body">
+                <!-- Medicine Shortage Table Section -->
+                <div class="table-section">
+                    <div class="table-header">
+                        <h3>Low Stock & Out of Stock Medicines (<span id="shortageCount">Loading...</span>)</h3>
+                        <div class="table-actions">
+                            <div class="search-container">
+                                <input type="text" id="searchMedicine" class="search-input" placeholder="Search medicines, categories, brands..." onkeyup="searchMedicines()">
+                                <button class="btn btn-secondary" onclick="clearSearch()">
+                                    <span>�</span>
+                                    Clear
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="medicine-table">
+                            <thead>
+                                <tr>
+                                    <th>Medicine ID</th>
+                                    <th>Medicine Name</th>
+                                    <th>Category</th>
+                                    <th>Stock</th>
+                                    <th>Price</th>
+                                    <th>Brand</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="medicineTableBody">
+                                <!-- Dynamic content will be loaded here -->
+                                <tr>
+                                    <td colspan="7" class="text-center">Loading shortage medicines...</td>
+                                </tr>
+                                <tr>
+                                    <td>MED004</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED004&name=Aspirin%20100mg&category=Pain%20Relief&stock=0&price=Rs.%2020.00&brand=CardioSafe&status=out-of-stock" class="medicine-link">Aspirin 100mg</a></td>
+                                    <td>Pain Relief</td>
+                                    <td>0</td>
+                                    <td>Rs. 20.00</td>
+                                    <td>MediSupply Co.</td>
+                                    <td><span class="status-badge danger">Out of Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED009</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED009&name=Losartan%2050mg&category=Hypertension&stock=8&price=Rs.%2042.00&brand=CardioMax&status=low-stock" class="medicine-link">Losartan 50mg</a></td>
+                                    <td>Hypertension</td>
+                                    <td>8</td>
+                                    <td>Rs. 42.00</td>
+                                    <td>CardioMed Ltd.</td>
+                                    <td><span class="status-badge warning">Low Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED012</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED012&name=Insulin%20Regular&category=Diabetes&stock=0&price=Rs.%20180.00&brand=DiaCare&status=out-of-stock" class="medicine-link">Insulin Regular</a></td>
+                                    <td>Diabetes</td>
+                                    <td>0</td>
+                                    <td>Rs. 180.00</td>
+                                    <td>DiabeCare Inc.</td>
+                                    <td><span class="status-badge danger">Out of Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED018</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED018&name=Ciprofloxacin%20500mg&category=Antibiotic&stock=3&price=Rs.%2065.00&brand=CiproMax&status=low-stock" class="medicine-link">Ciprofloxacin 500mg</a></td>
+                                    <td>Antibiotic</td>
+                                    <td>3</td>
+                                    <td>Rs. 65.00</td>
+                                    <td>MediCore Ltd.</td>
+                                    <td><span class="status-badge warning">Low Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED024</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED024&name=Salbutamol%20Inhaler&category=Respiratory&stock=0&price=Rs.%20145.00&brand=BreathEasy&status=out-of-stock" class="medicine-link">Salbutamol Inhaler</a></td>
+                                    <td>Respiratory</td>
+                                    <td>0</td>
+                                    <td>Rs. 145.00</td>
+                                    <td>RespiCare Ltd.</td>
+                                    <td><span class="status-badge danger">Out of Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED029</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED029&name=Warfarin%205mg&category=Anticoagulant&stock=6&price=Rs.%2058.00&brand=BloodSafe&status=low-stock" class="medicine-link">Warfarin 5mg</a></td>
+                                    <td>Anticoagulant</td>
+                                    <td>6</td>
+                                    <td>Rs. 58.00</td>
+                                    <td>CardioMed Ltd.</td>
+                                    <td><span class="status-badge warning">Low Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED035</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED035&name=Morphine%2010mg&category=Analgesic&stock=0&price=Rs.%20225.00&brand=PainRelief&status=out-of-stock" class="medicine-link">Morphine 10mg</a></td>
+                                    <td>Analgesic</td>
+                                    <td>0</td>
+                                    <td>Rs. 225.00</td>
+                                    <td>NarcoMed Co.</td>
+                                    <td><span class="status-badge danger">Out of Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED041</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED041&name=Epinephrine%20Auto-Injector&category=Emergency&stock=2&price=Rs.%20850.00&brand=EpiPen&status=low-stock" class="medicine-link">Epinephrine Auto-Injector</a></td>
+                                    <td>Emergency</td>
+                                    <td>2</td>
+                                    <td>Rs. 850.00</td>
+                                    <td>EmergencyMed Ltd.</td>
+                                    <td><span class="status-badge warning">Low Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED048</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED048&name=Prednisolone%205mg&category=Corticosteroid&stock=0&price=Rs.%2035.00&brand=SteroidCare&status=out-of-stock" class="medicine-link">Prednisolone 5mg</a></td>
+                                    <td>Corticosteroid</td>
+                                    <td>0</td>
+                                    <td>Rs. 35.00</td>
+                                    <td>HormoCare Ltd.</td>
+                                    <td><span class="status-badge danger">Out of Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED052</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED052&name=Furosemide%2040mg&category=Diuretic&stock=4&price=Rs.%2028.00&brand=WaterMax&status=low-stock" class="medicine-link">Furosemide 40mg</a></td>
+                                    <td>Diuretic</td>
+                                    <td>4</td>
+                                    <td>Rs. 28.00</td>
+                                    <td>KidneyMed Co.</td>
+                                    <td><span class="status-badge warning">Low Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED058</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED058&name=Nitroglycerin%20Tablets&category=Cardiac&stock=0&price=Rs.%20125.00&brand=HeartSafe&status=out-of-stock" class="medicine-link">Nitroglycerin Tablets</a></td>
+                                    <td>Cardiac</td>
+                                    <td>0</td>
+                                    <td>Rs. 125.00</td>
+                                    <td>CardioMed Ltd.</td>
+                                    <td><span class="status-badge danger">Out of Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED063</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED063&name=Hydroxychloroquine%20200mg&category=Antimalarial&stock=7&price=Rs.%2095.00&brand=MalariaGuard&status=low-stock" class="medicine-link">Hydroxychloroquine 200mg</a></td>
+                                    <td>Antimalarial</td>
+                                    <td>7</td>
+                                    <td>Rs. 95.00</td>
+                                    <td>TropicalMed Inc.</td>
+                                    <td><span class="status-badge warning">Low Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED069</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED069&name=Cyclosporine%20100mg&category=Immunosuppressant&stock=0&price=Rs.%20420.00&brand=ImmunoMax&status=out-of-stock" class="medicine-link">Cyclosporine 100mg</a></td>
+                                    <td>Immunosuppressant</td>
+                                    <td>0</td>
+                                    <td>Rs. 420.00</td>
+                                    <td>ImmunoMed Ltd.</td>
+                                    <td><span class="status-badge danger">Out of Stock</span></td>
+                                </tr>
+                                <tr>
+                                    <td>MED074</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED074&name=Levothyroxine%2050mcg&category=Thyroid&stock=9&price=Rs.%2032.00&brand=ThyroMax&status=low-stock" class="medicine-link">Levothyroxine 50mcg</a></td>
+                                    <td>Thyroid</td>
+                                    <td>9</td>
+                                    <td>Rs. 32.00</td>
+                                    <td>EndoCare Ltd.</td>
+                                    <td><span class="status-badge warning">Low Stock</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button class="pagination-btn" id="prevBtn" disabled onclick="changePage(-1)">Previous</button>
+                        <span class="pagination-info" id="pageInfo">Loading...</span>
+                        <button class="pagination-btn" id="nextBtn" disabled onclick="changePage(1)">Next</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/pharmacist-med-shortage.js" defer></script>
+</body>
+</html>
+
+
+
+

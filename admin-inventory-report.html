@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Report - New Lanka Pharmacy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/universal-session-manager.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="icons/pharmacy-logo.png" alt="New Lanka Pharmacy" class="logo">
+                <span class="brand-name">New Lanka</span>
+            </div>
+            
+            <!-- Admin Profile Section -->
+            <div class="admin-section">
+                <div class="admin-profile-sidebar">
+                    <img src="profile.jpg" alt="Admin" class="admin-avatar">
+                    <div class="admin-info">
+                        <h4>Admin</h4>
+                        <span>Admin</span>
+                    </div>
+                    <div class="admin-menu">
+                        <button class="admin-menu-btn" id="adminMenuBtn">⋮</button>
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span class="logout-icon">🚪</span>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="admin-dashboard.html" class="nav-item">
+                    <img src="icons/dashboard.png" alt="Dashboard" class="nav-icon">
+                    Dashboard
+                </a>
+                <a href="admin-cashier.html" class="nav-item">
+                    <img src="icons/casheir.png" alt="Cashier" class="nav-icon">
+                    Cashier
+                </a>
+                <a href="admin-inventory.html" class="nav-item">
+                    <img src="icons/inventory.png" alt="Inventory" class="nav-icon">
+                    Inventory
+                </a>
+                <a href="admin-sales.html" class="nav-item">
+                    <img src="icons/history.png" alt="Sales History" class="nav-icon">
+                    Sales History
+                </a>
+                <a href="admin-reports.html" class="nav-item active">
+                    <img src="icons/reports.png" alt="Reports" class="nav-icon">
+                    Reports
+                </a>
+                <a href="admin-customers.html" class="nav-item">
+                    <img src="icons/customer.png" alt="Customers" class="nav-icon">
+                    Customers
+                </a>
+                <a href="admin-configurations.html" class="nav-item">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+            </div>
+            
+            <!-- Footer Text -->
+            <div class="sidebar-footer">
+                <p>Developed by ESoft UNI Bit 004 Project Group 04</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">Inventory Report</h1>
+                </div>
+                <div class="header-right">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning</span>
+                        <div class="date-time">
+                            <span id="currentDate">01 Aug 2025</span>
+                            <span id="currentTime">01:45:23</span>
+                        </div>
+                    </div>
+                </div>
+            </header><!-- Content Header -->
+            <div class="content-header">
+            </div>
+
+            <!-- Content Body -->
+            <div class="content-body">
+                <!-- Report Filters -->
+                <div class="report-filters">
+                    <div class="filter-group">
+                        <label for="stockFilter">Stock Level:</label>
+                        <select id="stockFilter">
+                            <option value="all" selected>All Stock Levels</option>
+                            <option value="in-stock">In Stock</option>
+                            <option value="low-stock">Low Stock</option>
+                            <option value="out-of-stock">Out of Stock</option>
+                        </select>
+                    </div>
+                    <div class="filter-actions">
+                        <button class="btn btn-primary" onclick="generateInventoryReport()">Generate Report</button>
+                        <button class="btn btn-secondary" onclick="downloadPDF()">Download PDF</button>
+                    </div>
+                </div>
+
+                <!-- Inventory Summary Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card good">
+                        <div class="stat-icon">📦</div>
+                        <div class="stat-value" id="totalMedicines">Loading...</div>
+                        <div class="stat-label">Total Items</div>
+                        <div class="stat-change positive">Total medicines in inventory</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-icon">⚠️</div>
+                        <div class="stat-value" id="lowStockItems">Loading...</div>
+                        <div class="stat-label">Low Stock Items</div>
+                        <div class="stat-change negative">Items requiring restock</div>
+                    </div>
+                    <div class="stat-card danger">
+                        <div class="stat-icon">❌</div>
+                        <div class="stat-value" id="outOfStockItems">Loading...</div>
+                        <div class="stat-label">Out of Stock</div>
+                        <div class="stat-change negative">Items currently unavailable</div>
+                    </div>
+                    <div class="stat-card info">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-value" id="totalInventoryValue">Loading...</div>
+                        <div class="stat-label">Total Inventory Value</div>
+                        <div class="stat-change positive">Current stock valuation</div>
+                    </div>
+                </div>
+
+                <!-- Inventory Table -->
+                <div class="report-section">
+                    <h3 id="inventoryTableTitle">All Inventory Items</h3>
+                    <div class="table-container">
+                        <table class="medicine-table">
+                            <thead>
+                                <tr>
+                                    <th>Medicine ID</th>
+                                    <th>Medicine Name</th>
+                                    <th>Category</th>
+                                    <th>Stock</th>
+                                    <th>Price</th>
+                                    <th>Brand</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="inventoryTableBody">
+                                <tr>
+                                    <td colspan="7" class="loading">Loading inventory data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/admin-inventory-report.js"></script>
+</body>
+</html>

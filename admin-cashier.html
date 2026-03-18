@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Cashier - New Lanka Pharmacy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/modal-styles.css">
+    <script src="js/universal-session-manager.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="icons/pharmacy-logo.png" alt="New Lanka Pharmacy" class="logo">
+                <span class="brand-name">New Lanka</span>
+            </div>
+            
+            <!-- Admin Profile Section -->
+            <div class="admin-section">
+                <div class="admin-profile-sidebar">
+                    <img src="profile.jpg" alt="Admin" class="admin-avatar">
+                    <div class="admin-info">
+                        <h4>Admin</h4>
+                        <span>Admin</span>
+                    </div>
+                    <div class="admin-menu">
+                        <button class="admin-menu-btn" id="adminMenuBtn">⋮</button>
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span class="logout-icon">🚪</span>
+                                Logout
+                            </a> 
+                        </div>
+                    </div>
+                </div>
+            </div>            <div class="nav-menu">
+                <a href="admin-dashboard.html" class="nav-item">
+                    <img src="icons/dashboard.png" alt="Dashboard" class="nav-icon">
+                    Dashboard
+                </a>
+                <a href="admin-cashier.html" class="nav-item active">
+                    <img src="icons/casheir.png" alt="Cashier" class="nav-icon">
+                    Cashier
+                </a>
+                <a href="admin-inventory.html" class="nav-item">
+                    <img src="icons/inventory.png" alt="Inventory" class="nav-icon">
+                    Inventory
+                </a>
+                <a href="admin-sales.html" class="nav-item">
+                    <img src="icons/history.png" alt="Sales History" class="nav-icon">
+                    Sales History
+                </a>
+                <a href="admin-reports.html" class="nav-item">
+                    <img src="icons/reports.png" alt="Reports" class="nav-icon">
+                    Reports
+                </a>
+                <a href="admin-customers.html" class="nav-item">
+                    <img src="icons/customer.png" alt="Customers" class="nav-icon">
+                    Customers
+                </a>
+                <a href="admin-configurations.html" class="nav-item">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+            </div>
+            
+            <!-- Footer Text -->
+            <div class="sidebar-footer">
+                <p>Developed by ESoft UNI Bit 004 Project Group 04</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">Cashier</h1>
+                </div>
+                <div class="header-right">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning</span>
+                        <div class="date-time">
+                            <span id="currentDate">25 May 2025</span>
+                            <span id="currentTime">22:45:04</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Header -->
+            <div class="content-header">
+            </div>
+
+            <!-- Content Body -->
+            <div class="content-body">
+                <div style="display: flex; gap: 20px; height: calc(100vh - 200px);">
+                    <!-- Left Side - Medicine Search & Customer -->
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+                          <!-- Customer Selection -->
+                        <div class="info-card">
+                            <div class="info-header">
+                                <h3>👤 Customer</h3>
+                            </div>                            <div class="info-content">
+                                <div style="display: flex; gap: 15px; align-items: center;">
+                                    <button class="btn btn-secondary" id="selectCustomerBtn">🔍 Select Customer</button>
+                                    <button class="btn btn-primary" id="addNewCustomerBtn">➕ Add New</button>
+                                </div>
+                                <div id="selectedCustomerInfo" style="margin-top: 15px; padding: 10px; background-color: #f8f9fa; border-radius: 5px; display: none;">
+                                    <strong>Selected Customer:</strong>
+                                    <div id="customerDetails"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Medicine Search -->                        <div class="info-card" style="flex: 1;">
+                            <div class="info-header">
+                                <h3>💊 Medicine Search</h3>
+                            </div>
+                            <div class="info-content" style="height: 100%; display: flex; flex-direction: column;">
+                                <div style="display: flex; gap: 15px; align-items: center; margin-bottom: 15px;">
+                                    <input type="text" class="form-input" id="medicineSearch" placeholder="Search medicine by name, batch, or barcode..." style="text-align: left; flex: 1;">
+                                    <button class="btn btn-primary" id="addNewMedicineBtn">➕ Add New</button>
+                                </div>
+                                
+                                <!-- Medicine Search Results -->
+                                <div style="flex: 1; overflow-y: auto;">
+                                    <div class="table-container" style="height: 100%;">
+                                        <table class="medicine-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Medicine</th>
+                                                    <th>Brand</th>
+                                                    <th>Stock</th>
+                                                    <th>Price</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="medicineSearchResults">
+                                                <!-- Search results will be populated here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Side - Shopping Cart -->
+                    <div style="flex: 1; display: flex; flex-direction: column;">
+                        <div class="info-card" style="height: 100%; display: flex; flex-direction: column;">
+                            <div class="info-header" style="display: flex; justify-content: space-between; align-items: center;">
+                                <h3>🛒 Shopping Cart</h3>
+                                <button class="btn btn-danger btn-small" id="clearCartBtn">🗑️ Clear Cart</button>
+                            </div>
+                            <div class="info-content" style="flex: 1; display: flex; flex-direction: column;">
+                                
+                                <!-- Cart Items -->
+                                <div style="flex: 1; overflow-y: auto; margin-bottom: 20px;">
+                                    <div class="table-container" style="height: 100%;">
+                                        <table class="medicine-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Medicine</th>
+                                                    <th>Qty</th>
+                                                    <th>Price</th>
+                                                    <th>Total</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="cartItems">
+                                                <!-- Cart items will be populated here -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <!-- Cart Summary -->
+                                <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                        <span>Subtotal:</span>
+                                        <span id="subtotal">Rs. 0.00</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                        <span>Discount:</span>
+                                        <div style="display: flex; gap: 10px; align-items: center;">
+                                            <input type="number" id="discountInput" placeholder="0" style="width: 60px; padding: 5px; text-align: right;" min="0" max="100">
+                                            <span>%</span>
+                                            <span id="discountAmount">Rs. 0.00</span>
+                                        </div>
+                                    </div>
+                                    <hr style="margin: 10px 0;">
+                                    <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: bold;">
+                                        <span>Total:</span>
+                                        <span id="totalAmount">Rs. 0.00</span>
+                                    </div>
+                                </div>
+
+                                <!-- Payment Section -->
+                                <div style="background-color: #e8f5e8; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                                    <h4 style="margin: 0 0 10px 0;">💳 Payment</h4>
+                                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                                        <button class="btn btn-secondary payment-method" data-method="cash">💵 Cash</button>
+                                        <button class="btn btn-secondary payment-method" data-method="card">💳 Card</button>
+                                    </div>
+                                    <div style="display: flex; gap: 10px; align-items: center;">
+                                        <span>Amount Paid:</span>
+                                        <input type="number" id="amountPaid" placeholder="0.00" style="flex: 1; padding: 8px; text-align: right;" min="0" step="0.01">
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; margin-top: 10px; font-weight: bold;">
+                                        <span>Change:</span>
+                                        <span id="change">Rs. 0.00</span>
+                                    </div>
+                                </div>
+
+                                <!-- Action Buttons -->
+                                <div style="display: flex; gap: 10px;">
+                                    <button class="btn btn-primary" id="completeSaleBtn" style="flex: 1;">✅ Complete Sale</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Customer Selection Modal -->
+    <div id="customerModal" class="modal">
+        <div class="modal-content wide">
+            <div class="modal-header">
+                <h2>Select Customer</h2>
+                <span class="close" id="customerModalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div style="margin-bottom: 15px;">
+                    <input type="text" class="form-input" id="customerModalSearch" placeholder="Search customers..." style="text-align: left;">
+                </div>
+                <div class="table-container" style="max-height: 300px; overflow-y: auto;">
+                    <table class="medicine-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerList">
+                            <!-- Customer list will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>        </div>
+    </div>
+
+    <!-- Add New Customer Modal -->
+    <div id="addCustomerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="addCustomerModalTitle">Add New Customer</h2>
+                <span class="close" id="addCustomerModalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="customer-form">
+                    <!-- Customer Details Section -->
+                    <div style="width: 100%;">
+                        <div class="info-row">
+                            <span class="info-label">Customer Name:</span> 
+                            <input type="text" class="form-input" id="addModalCustomerName" placeholder="Enter customer name" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Contact Number:</span>
+                            <input type="tel" class="form-input" id="addModalContactNumber" placeholder="077-123-4567" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Email Address:</span>
+                            <input type="email" class="form-input" id="addModalEmail" placeholder="Enter email address" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Address:</span>
+                            <textarea class="form-input" id="addModalAddress" placeholder="Enter customer address" rows="2" style="text-align: left; resize: vertical;"></textarea>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Date of Birth:</span>
+                            <input type="date" class="form-input" id="addModalDateOfBirth" style="text-align: left;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="addCustomerModalCancel">Cancel</button>
+                <button class="btn btn-primary" id="addCustomerModalSave">Save Customer</button>
+            </div>        </div>
+    </div>    <!-- Add New Medicine Modal -->
+    <div id="addMedicineModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="addMedicineModalTitle">Add New Medicine</h2>
+                <span class="close" id="addMedicineModalClose">&times;</span>
+            </div>
+            <div class="modal-body">                <div class="user-form">
+                    <!-- Medicine Details Section -->
+                    <div style="width: 100%;">
+                        <div class="info-row">
+                            <span class="info-label">Medicine Name:</span>
+                            <input type="text" class="form-input" id="addModalMedicineName" placeholder="Enter medicine name" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Category:</span>
+                            <select class="form-input" id="addModalCategory" style="text-align: left;">
+                                <option value="">Loading categories...</option>
+                            </select>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Stock Quantity:</span>
+                            <input type="number" class="form-input" id="addModalMedicineStock" placeholder="Enter stock quantity" min="0" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Price (Rs.):</span>
+                            <input type="number" class="form-input" id="addModalMedicinePrice" placeholder="Enter price" min="0" step="0.01" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Brand/Supplier:</span>
+                            <input type="text" class="form-input" id="addModalMedicineBrand" placeholder="Enter brand or supplier" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Expiry Date:</span>
+                            <input type="date" class="form-input" id="addModalMedicineExpiry" style="text-align: left;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="addMedicineModalCancel">Cancel</button>
+                <button class="btn btn-primary" id="addMedicineModalSave">Save Medicine</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Quantity Modal -->
+    <div id="quantityModal" class="modal">
+        <div class="modal-content" style="max-width: 400px;">
+            <div class="modal-header">
+                <h2>Add to Cart</h2>
+                <span class="close" id="quantityModalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="selectedMedicineInfo" style="margin-bottom: 15px;"></div>
+                <div style="margin-bottom: 15px;">
+                    <label>Quantity:</label>
+                    <input type="number" class="form-input" id="quantityInput" min="1" value="1" style="text-align: center;">
+                    <div style="margin-top: 5px; font-size: 12px; color: #666;">
+                        Available: <span id="availableStock">0</span>
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-weight: bold;">
+                    <span>Total Price:</span>
+                    <span id="itemTotalPrice">Rs. 0.00</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="quantityCancel">Cancel</button>
+                <button class="btn btn-primary" id="addToCartBtn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sale Complete Modal -->
+    <div id="saleCompleteModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>✅ Sale Completed</h2>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h3>Sale ID: <span id="completedSaleId"></span></h3>
+                    <p>Transaction completed successfully!</p>
+                </div>
+                <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                        <span>Total Amount:</span>
+                        <span id="receiptTotal"></span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                        <span>Amount Paid:</span>
+                        <span id="receiptPaid"></span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; font-weight: bold;">
+                        <span>Change:</span>
+                        <span id="receiptChange"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="printReceiptBtn">🖨️ Print Receipt</button>
+                <button class="btn btn-primary" id="newSaleBtn">🆕 New Sale</button>
+            </div>        </div>
+    </div>
+    <script src="js/admin-cashier.js" defer></script>
+
+    <style>
+        /* Low stock warning */
+        .low-stock {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        /* Payment method buttons */
+        .payment-method {
+            transition: all 0.3s ease;
+        }
+
+        .payment-method.btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .content-body > div {
+                flex-direction: column !important;
+                height: auto !important;
+            }
+            
+            .content-body > div > div {
+                height: 400px !important;
+            }
+        }
+    </style>
+</body>
+</html>
+

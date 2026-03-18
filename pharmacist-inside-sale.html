@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sale Details - New Lanka Pharmacy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/universal-session-manager.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="icons/pharmacy-logo.png" alt="New Lanka Pharmacy" class="logo">
+                <span class="brand-name">New Lanka</span>
+            </div>
+            
+            <!-- Pharmacist Profile Section -->
+            <div class="admin-section">
+                <div class="admin-profile-sidebar">
+                    <img src="profile.jpg" alt="Pharmacist" class="admin-avatar">
+                    <div class="admin-info">
+                        <h4>Pharmacist</h4>
+                        <span>Pharmacist</span>
+                    </div>
+                    <div class="admin-menu">
+                        <button class="admin-menu-btn" id="adminMenuBtn">⋮</button>
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span class="logout-icon">🚪</span>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="pharmacist-cashier.html" class="nav-item">
+                    <img src="icons/casheir.png" alt="Cashier" class="nav-icon">
+                    Cashier
+                </a>
+                <a href="pharmacist-inventory.html" class="nav-item">
+                    <img src="icons/inventory.png" alt="Inventory" class="nav-icon">
+                    Inventory
+                </a>
+                <a href="pharmacist-sales.html" class="nav-item active">
+                    <img src="icons/history.png" alt="Sales History" class="nav-icon">
+                    Sales History
+                </a>
+                <a href="pharmacist-customers.html" class="nav-item">
+                    <img src="icons/customer.png" alt="Customers" class="nav-icon">
+                    Customers
+                </a>
+                <a href="pharmacist-configurations.html" class="nav-item">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+            </div>
+            
+            <!-- Footer Text -->
+            <div class="sidebar-footer">
+                <p>Developed by ESoft UNI Bit 004 Project Group 04</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title" id="saleTitle">Sale Details - SAL001</h1>
+                </div>
+                <div class="header-right">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning</span>
+                        <div class="date-time">
+                            <span id="currentDate">01 Jul 2025</span>
+                            <span id="currentTime">10:30:00</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Body -->
+            <div class="content-body">
+                <!-- Sale Summary Cards -->
+                <div class="medicine-details-grid">
+                    <!-- Transaction Information Card -->
+                    <div class="medicine-card">
+                        <div class="card-header">
+                            <h3>Transaction Information</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="medicine-stats">
+                                <div class="medicine-stat">
+                                    <div class="stat-value" id="saleId">SAL001</div>
+                                    <div class="stat-label">Sale ID</div>
+                                </div>
+                                <div class="medicine-stat">
+                                    <div class="stat-value" id="saleDate">18 Jun 2025</div>
+                                    <div class="stat-label">Date</div>
+                                </div>
+                                <div class="medicine-stat">
+                                    <div class="stat-value" id="saleTime">09:15:32</div>
+                                    <div class="stat-label">Time</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customer Information Card -->
+                    <div class="medicine-card">
+                        <div class="card-header">
+                            <h3>Customer Information</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="medicine-stats">
+                                <div class="medicine-stat">
+                                    <div class="stat-value" id="customerName">John Silva</div>
+                                    <div class="stat-label">Customer Name</div>
+                                </div>
+                                <div class="medicine-stat">
+                                    <div class="stat-value" id="customerId">CUS001</div>
+                                    <div class="stat-label">Customer ID</div>
+                                </div>
+                                <div class="medicine-stat">
+                                    <div class="stat-value" id="userName">Pharmacist</div>
+                                    <div class="stat-label">Served By</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sale Summary -->
+                <div class="medicine-details-section">
+                    <div class="medicine-form-card">
+                        <div class="form-section">
+                            <h3>Sale Summary</h3>
+                            <div class="form-grid sale-summary">
+                                <div class="summary-item">
+                                    <span class="summary-label">Total Items:</span>
+                                    <span class="summary-value" id="totalItems">3</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Subtotal:</span>
+                                    <span class="summary-value" id="subtotal">Rs. 415.00</span>
+                                </div>
+                                <div class="summary-item total">
+                                    <span class="summary-label">Total Amount:</span>
+                                    <span class="summary-value" id="totalAmount">Rs. 450.28</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Items Purchased Table -->
+                <div class="table-section">
+                    <div class="table-header">
+                        <h3>Items Purchased</h3>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="medicine-table">
+                            <thead>
+                                <tr>
+                                    <th>Medicine Name</th>
+                                    <th>Brand</th>
+                                    <th>Quantity</th>
+                                    <th>Unit Price</th>
+                                    <th>Total Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="itemsTableBody">
+                                <!-- Items will be loaded dynamically by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Payment Information -->
+                <div class="medicine-details-section">
+                    <div class="medicine-form-card">
+                        <div class="form-section">
+                            <h3>Payment Information</h3>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Payment Method</label>
+                                    <div class="form-value" id="paymentMethodDetail">Cash Payment</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Amount Received</label>
+                                    <div class="form-value" id="amountReceived">Rs. 500.00</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Change Given</label>
+                                    <div class="form-value" id="changeGiven">Rs. 49.72</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Print Button at Bottom -->
+        <div class="print-button-bottom">
+            <button class="btn btn-primary" id="printBtn">
+                <span>🖨️</span>
+                Print Receipt
+            </button>
+        </div>
+    </div>
+
+    <script src="js/pharmacist-inside-sale.js"></script>
+</body>
+</html>
+
+
+

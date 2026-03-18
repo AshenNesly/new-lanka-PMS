@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Management Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .warning { background-color: #fff3cd; border-color: #ffeaa7; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        button { margin: 5px; padding: 10px 15px; border: none; border-radius: 3px; cursor: pointer; }
+        .btn-primary { background-color: #007bff; color: white; }
+        .btn-success { background-color: #28a745; color: white; }
+        .btn-warning { background-color: #ffc107; color: black; }
+    </style>
+    <script src="js/universal-session-manager.js" defer></script>
+</head>
+<body>
+    <h1>🔐 Session Management Test Page</h1>
+    
+    <div class="test-section warning">
+        <h3>Current Session Status</h3>
+        <div id="sessionStatus">Checking session...</div>
+        <div id="userInfo"></div>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Different Page Access</h3>
+        <p>Try accessing these pages - they should redirect to login if you're not authenticated:</p>
+        
+        <h4>Admin Pages:</h4>
+        <button class="btn-primary" onclick="testPage('admin-dashboard.html')">Admin Dashboard</button>
+        <button class="btn-primary" onclick="testPage('admin-inventory.html')">Admin Inventory</button>
+        <button class="btn-primary" onclick="testPage('admin-sales.html')">Admin Sales</button>
+        <button class="btn-primary" onclick="testPage('admin-reports.html')">Admin Reports</button>
+        <button class="btn-primary" onclick="testPage('admin-customers.html')">Admin Customers</button>
+        
+        <h4>Pharmacist Pages:</h4>
+        <button class="btn-success" onclick="testPage('pharmacist-cashier.html')">Pharmacist Cashier</button>
+        <button class="btn-success" onclick="testPage('pharmacist-inventory.html')">Pharmacist Inventory</button>
+        <button class="btn-success" onclick="testPage('pharmacist-sales.html')">Pharmacist Sales</button>
+        <button class="btn-success" onclick="testPage('pharmacist-customers.html')">Pharmacist Customers</button>
+    </div>
+    
+    <div class="test-section">
+        <h3>Login Test</h3>
+        <button class="btn-warning" onclick="window.location.href='index.html'">Go to Login Page</button>
+    </div>
+    
+    <div class="test-section">
+        <h3>Test Results</h3>
+        <div id="testResults"></div>
+    </div>
+
+    <script>
+        function testPage(page) {
+            const resultsDiv = document.getElementById('testResults');
+            resultsDiv.innerHTML += `<p>🔍 Testing access to ${page}...</p>`;
+            
+            // Open in new tab to test redirection
+            const newWindow = window.open(page, '_blank');
+            
+            // Check after a short delay
+            setTimeout(() => {
+                try {
+                    const currentUrl = newWindow.location.href;
+                    if (currentUrl.includes('index.html')) {
+                        resultsDiv.innerHTML += `<p style="color: green;">✅ ${page} - Correctly redirected to login</p>`;
+                    } else {
+                        resultsDiv.innerHTML += `<p style="color: orange;">⚠️ ${page} - Access granted (user might be logged in)</p>`;
+                    }
+                } catch (e) {
+                    resultsDiv.innerHTML += `<p style="color: blue;">ℹ️ ${page} - Page opened (cannot check due to CORS)</p>`;
+                }
+            }, 2000);
+        }
+        
+        // Check session status when page loads
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (window.sessionManager) {
+                // Wait for session manager to initialize
+                setTimeout(async () => {
+                    const statusDiv = document.getElementById('sessionStatus');
+                    const userInfoDiv = document.getElementById('userInfo');
+                    
+                    if (sessionManager.isLoggedIn()) {
+                        const user = sessionManager.getCurrentUser();
+                        statusDiv.innerHTML = '<span style="color: green;">✅ User is logged in</span>';
+                        userInfoDiv.innerHTML = `
+                            <strong>User:</strong> ${user.username}<br>
+                            <strong>Role:</strong> ${user.role}<br>
+                            <strong>ID:</strong> ${user.user_id}
+                        `;
+                        statusDiv.parentNode.className = 'test-section success';
+                    } else {
+                        statusDiv.innerHTML = '<span style="color: red;">❌ User is not logged in</span>';
+                        userInfoDiv.innerHTML = '<em>No user session found</em>';
+                        statusDiv.parentNode.className = 'test-section error';
+                    }
+                }, 1000);
+            } else {
+                document.getElementById('sessionStatus').innerHTML = '<span style="color: orange;">⚠️ Session manager not available</span>';
+            }
+        });
+    </script>
+</body>
+</html>

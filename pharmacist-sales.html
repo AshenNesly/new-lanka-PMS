@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales History - New Lanka Pharmacy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/pharmacist-sales.js" defer></script>
+    <script src="js/universal-session-manager.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="icons/pharmacy-logo.png" alt="New Lanka Pharmacy" class="logo">
+                <span class="brand-name">New Lanka</span>
+            </div>
+              <!-- Pharmacist Profile Section -->
+            <div class="admin-section">
+                <div class="admin-profile-sidebar">
+                    <img src="profile.jpg" alt="Pharmacist" class="admin-avatar">
+                    <div class="admin-info">
+                        <h4>Pharmacist</h4>
+                        <span>Pharmacist</span>
+                    </div>
+                    <div class="admin-menu">
+                        <button class="admin-menu-btn" id="adminMenuBtn">⋮</button>
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span class="logout-icon">🚪</span>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <div class="nav-menu">
+                <a href="pharmacist-cashier.html" class="nav-item">
+                    <img src="icons/casheir.png" alt="Cashier" class="nav-icon">
+                    Cashier
+                </a>
+                <a href="pharmacist-inventory.html" class="nav-item">
+                    <img src="icons/inventory.png" alt="Inventory" class="nav-icon">
+                    Inventory
+                </a>
+                <a href="pharmacist-sales.html" class="nav-item active">
+                    <img src="icons/history.png" alt="Sales History" class="nav-icon">
+                    Sales History
+                </a>
+                <a href="pharmacist-customers.html" class="nav-item">
+                    <img src="icons/customer.png" alt="Customers" class="nav-icon">
+                    Customers
+                </a>
+                <a href="pharmacist-configurations.html" class="nav-item">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+            </div>
+            
+            <!-- Footer Text -->
+            <div class="sidebar-footer">
+                <p>Developed by ESoft UNI Bit 004 Project Group 04</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">Sales History</h1>
+                </div>
+                <div class="header-right">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning</span>
+                        <div class="date-time">
+                            <span id="currentDate">25 May 2025</span>
+                            <span id="currentTime">22:45:04</span>
+                        </div>
+                    </div>
+                </div>
+            </header>            <!-- Content Header -->
+            <div class="content-header">
+            </div>
+
+            <!-- Content Body -->
+            <div class="content-body">
+                <!-- Sales Table Section -->
+                <div class="table-section">
+                    <div class="table-header">
+                        <div class="table-actions" style="width: 100%; justify-content: space-between; align-items: center;">
+                            <div class="search-container">
+                                <input type="text" id="searchSales" class="search-input" placeholder="Search sales..." onkeyup="searchSales()">
+                                <button class="btn btn-secondary" onclick="clearSearch()">
+                                    <span>🔍</span>
+                                    Clear
+                                </button>
+                            </div>
+                            <div class="filter-container" style="display: flex; align-items: center; gap: 10px;">
+                                <select id="userFilter" class="form-input" style="width: 120px;">
+                                    <option value="">All Users</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Pharmacist">Pharmacist</option>
+                                </select>
+                                <input type="date" id="startDate" class="form-input" style="width: 130px;">
+                                <span style="margin: 0 5px;">to</span>
+                                <input type="date" id="endDate" class="form-input" style="width: 130px;">
+                                <button class="btn btn-secondary" id="filterBtn">
+                                    <span>📊</span>
+                                    Filter
+                                </button>
+                                <button class="btn btn-secondary" id="clearBtn">
+                                    <span>🔄</span>
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="medicine-table">
+                            <thead>
+                                <tr>
+                                    <th>Sales ID</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Customer Name</th>
+                                    <th>Total Medicines</th>
+                                    <th>Amount</th>
+                                    <th>User Name</th>
+                                </tr>
+                            </thead>
+                            <tbody id="salesTableBody">
+                                <!-- Sales data will be loaded dynamically by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button class="pagination-btn" disabled>Previous</button>
+                        <span class="pagination-info">Page 1 of 9</span>
+                        <button class="pagination-btn">Next</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+
+
+

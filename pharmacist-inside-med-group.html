@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicine Group Details - New Lanka Pharmacy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/modal-styles.css">
+    <script src="js/pharmacist-inside-med-group.js" defer></script>
+    <script src="js/universal-session-manager.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="icons/pharmacy-logo.png" alt="New Lanka Pharmacy" class="logo">
+                <span class="brand-name">New Lanka</span>
+            </div>
+            
+            <!-- Pharmacist Profile Section -->
+            <div class="admin-section">
+                <div class="admin-profile-sidebar">
+                    <img src="profile.jpg" alt="Pharmacist" class="admin-avatar">
+                    <div class="admin-info">
+                        <h4>Pharmacist</h4>
+                        <span>Pharmacist</span>
+                    </div>
+                    <div class="admin-menu">
+                        <button class="admin-menu-btn" id="adminMenuBtn">⋮</button>
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span class="logout-icon">🚪</span>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              <div class="nav-menu">
+                <a href="pharmacist-cashier.html" class="nav-item">
+                    <img src="icons/casheir.png" alt="Cashier" class="nav-icon">
+                    Cashier
+                </a>
+                <a href="pharmacist-inventory.html" class="nav-item active">
+                    <img src="icons/inventory.png" alt="Inventory" class="nav-icon">
+                    Inventory
+                </a>
+                <a href="pharmacist-sales.html" class="nav-item">
+                    <img src="icons/history.png" alt="Sales History" class="nav-icon">
+                    Sales History
+                </a>
+                <a href="pharmacist-customers.html" class="nav-item">
+                    <img src="icons/customer.png" alt="Customers" class="nav-icon">
+                    Customers
+                </a>
+                <a href="pharmacist-configurations.html" class="nav-item">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+            </div>
+            
+            <!-- Footer Text -->
+            <div class="sidebar-footer">
+                <p>Developed by ESoft UNI Bit 004 Project Group 04</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title" id="groupTitle">Medicine Group Details</h1>
+                    <p class="page-description" id="groupDescription">All medicines in the selected category.</p>
+                </div>
+                <div class="header-right">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning</span>
+                        <div class="date-time">
+                            <span id="currentDate">25 May 2025</span>
+                            <span id="currentTime">22:45:04</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Header -->
+            <div class="content-header">
+            </div>
+
+            <!-- Content Body -->
+            <div class="content-body">
+                <!-- Medicines in Group Table -->
+                <div class="table-section">
+                    <div class="table-header">
+                        <h3>Medicines in <span id="groupNameInTable">Pain Relief</span> Group (<span id="medicinesCount">45</span> medicines)</h3>                        <div class="table-actions">
+                            <div class="search-container">
+                                <input type="text" id="searchMedicine" class="search-input" placeholder="Search medicines...">
+                                <button class="btn btn-secondary" onclick="clearSearch()">
+                                    <span>🔍</span>
+                                    Clear
+                                </button>
+                            </div>
+                            <button class="btn btn-primary" id="addMedicineToGroupBtn">
+                                <span>➕</span>
+                                Add Medicine to Group
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container">
+                        <table class="medicine-table">                            <thead>
+                                <tr>
+                                    <th>Medicine ID</th>
+                                    <th>Medicine Name</th>
+                                    <th>Brand</th>
+                                    <th>Stock</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="medicinesTableBody">
+                                <!-- Default Pain Relief medicines -->                                <tr>
+                                    <td>MED001</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED001&name=Paracetamol%20500mg&category=Pain%20Relief&stock=150&price=Rs.%2025.00&brand=MediCare&status=in-stock" class="medicine-link">Paracetamol 500mg</a></td>
+                                    <td>MediCare</td>
+                                    <td>150</td>
+                                    <td>Rs. 25.00</td>
+                                    <td><span class="status-badge good">In Stock</span></td>
+                                </tr>                                <tr>
+                                    <td>MED003</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED003&name=Ibuprofen%20400mg&category=Pain%20Relief&stock=5&price=Rs.%2035.00&brand=PainAway&status=low-stock" class="medicine-link">Ibuprofen 400mg</a></td>
+                                    <td>PainAway</td>
+                                    <td>5</td>
+                                    <td>Rs. 35.00</td>
+                                    <td><span class="status-badge warning">Low Stock</span></td>
+                                </tr>                                <tr>
+                                    <td>MED004</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED004&name=Aspirin%20100mg&category=Pain%20Relief&stock=0&price=Rs.%2020.00&brand=CardioSafe&status=out-of-stock" class="medicine-link">Aspirin 100mg</a></td>
+                                    <td>CardioSafe</td>
+                                    <td>0</td>
+                                    <td>Rs. 20.00</td>
+                                    <td><span class="status-badge danger">Out of Stock</span></td>
+                                </tr>                                <tr>
+                                    <td>MED015</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED015&name=Diclofenac%2050mg&category=Pain%20Relief&stock=85&price=Rs.%2040.00&brand=PainFree&status=in-stock" class="medicine-link">Diclofenac 50mg</a></td>
+                                    <td>PainFree</td>
+                                    <td>85</td>
+                                    <td>Rs. 40.00</td>
+                                    <td><span class="status-badge good">In Stock</span></td>
+                                </tr>                                <tr>
+                                    <td>MED016</td>
+                                    <td><a href="pharmacist-inside-med.html?id=MED016&name=Naproxen%20250mg&category=Pain%20Relief&stock=65&price=Rs.%2038.00&brand=ReliefMax&status=in-stock" class="medicine-link">Naproxen 250mg</a></td>
+                                    <td>ReliefMax</td>
+                                    <td>65</td>
+                                    <td>Rs. 38.00</td>
+                                    <td><span class="status-badge good">In Stock</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination">
+                        <button class="pagination-btn" disabled>Previous</button>
+                        <span class="pagination-info">Page 1 of 9</span>
+                        <button class="pagination-btn">Next</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Medicine to Group Modal -->
+    <div id="addMedicineToGroupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Medicine to Group</h2>
+                <span class="close" id="addMedicineModalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="user-form">
+                    <!-- Medicine Details Section -->
+                    <div style="width: 100%;">
+                        <div class="info-row">
+                            <span class="info-label">Medicine Name:</span>
+                            <input type="text" class="form-input" id="addMedicineName" placeholder="Enter medicine name" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Stock Quantity:</span>
+                            <input type="number" class="form-input" id="addMedicineStock" placeholder="Enter stock quantity" min="0" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Price (Rs.):</span>
+                            <input type="number" class="form-input" id="addMedicinePrice" placeholder="Enter price" min="0" step="0.01" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Brand/Supplier:</span>
+                            <input type="text" class="form-input" id="addMedicineBrand" placeholder="Enter brand or supplier" style="text-align: left;">
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">How to Use:</span>
+                            <textarea class="form-input" id="addMedicineHowToUse" placeholder="Enter usage instructions" rows="3" style="text-align: left; resize: vertical;"></textarea>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Side Effects:</span>
+                            <textarea class="form-input" id="addMedicineSideEffects" placeholder="Enter side effects" rows="3" style="text-align: left; resize: vertical;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="addMedicineModalCancel">Cancel</button>
+                <button class="btn btn-primary" id="addMedicineModalSave">Add Medicine</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/pharmacist-inside-med-group.js" defer></script>
+</body>
+</html>
+
+
+
+

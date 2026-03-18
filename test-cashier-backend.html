@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cashier Backend Test</title>
+</head>
+<body>
+    <h1>Admin Cashier Backend API Test</h1>
+    
+    <div style="margin: 20px 0;">
+        <h2>Test Medicine Search</h2>
+        <input type="text" id="searchInput" placeholder="Search medicines..." style="padding: 8px; width: 300px;">
+        <button onclick="testMedicineSearch()" style="padding: 8px 15px;">Search</button>
+        <div id="medicineResults" style="margin-top: 10px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;"></div>
+    </div>
+    
+    <div style="margin: 20px 0;">
+        <h2>Test Customer Search</h2>
+        <input type="text" id="customerSearchInput" placeholder="Search customers..." style="padding: 8px; width: 300px;">
+        <button onclick="testCustomerSearch()" style="padding: 8px 15px;">Search</button>
+        <div id="customerResults" style="margin-top: 10px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;"></div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'php/admin-cashier.php';
+
+        async function testMedicineSearch() {
+            const searchTerm = document.getElementById('searchInput').value;
+            const resultsDiv = document.getElementById('medicineResults');
+            
+            try {
+                resultsDiv.innerHTML = 'Loading...';
+                
+                const params = new URLSearchParams({
+                    action: 'search_medicines',
+                    search: searchTerm,
+                    limit: 5
+                });
+                
+                const response = await fetch(`${API_BASE_URL}?${params}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    let html = `<h3>Found ${data.medicines.length} medicines:</h3>`;
+                    data.medicines.forEach(med => {
+                        html += `<div style="margin: 5px 0; padding: 5px; border: 1px solid #ddd;">
+                            <strong>${med.name}</strong> - ${med.brand}<br>
+                            Stock: ${med.stock} | Price: Rs. ${med.price} | Batch: ${med.batch}
+                        </div>`;
+                    });
+                    resultsDiv.innerHTML = html;
+                } else {
+                    resultsDiv.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+                }
+                
+            } catch (error) {
+                resultsDiv.innerHTML = `<p style="color: red;">Failed to fetch: ${error.message}</p>`;
+            }
+        }
+
+        async function testCustomerSearch() {
+            const searchTerm = document.getElementById('customerSearchInput').value;
+            const resultsDiv = document.getElementById('customerResults');
+            
+            try {
+                resultsDiv.innerHTML = 'Loading...';
+                
+                const params = new URLSearchParams({
+                    action: 'search_customers',
+                    search: searchTerm,
+                    limit: 5
+                });
+                
+                const response = await fetch(`${API_BASE_URL}?${params}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    let html = `<h3>Found ${data.customers.length} customers:</h3>`;
+                    data.customers.forEach(customer => {
+                        html += `<div style="margin: 5px 0; padding: 5px; border: 1px solid #ddd;">
+                            <strong>${customer.name}</strong><br>
+                            Phone: ${customer.phone} | ID: ${customer.id}
+                        </div>`;
+                    });
+                    resultsDiv.innerHTML = html;
+                } else {
+                    resultsDiv.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+                }
+                
+            } catch (error) {
+                resultsDiv.innerHTML = `<p style="color: red;">Failed to fetch: ${error.message}</p>`;
+            }
+        }
+
+        // Test on page load
+        window.onload = function() {
+            testMedicineSearch();
+            testCustomerSearch();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Total Sales Report - New Lanka Pharmacy</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/universal-session-manager.js" defer></script>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo-section">
+                <img src="icons/pharmacy-logo.png" alt="New Lanka Pharmacy" class="logo">
+                <span class="brand-name">New Lanka</span>
+            </div>
+            
+            <!-- Admin Profile Section -->
+            <div class="admin-section">
+                <div class="admin-profile-sidebar">
+                    <img src="profile.jpg" alt="Admin" class="admin-avatar">
+                    <div class="admin-info">
+                        <h4>Admin</h4>
+                        <span>Admin</span>
+                    </div>
+                    <div class="admin-menu">
+                        <button class="admin-menu-btn" id="adminMenuBtn">⋮</button>
+                        <div class="admin-dropdown" id="adminDropdown">
+                            <a href="#" class="dropdown-item" id="logoutBtn">
+                                <span class="logout-icon">🚪</span>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="admin-dashboard.html" class="nav-item">
+                    <img src="icons/dashboard.png" alt="Dashboard" class="nav-icon">
+                    Dashboard
+                </a>
+                <a href="admin-cashier.html" class="nav-item">
+                    <img src="icons/casheir.png" alt="Cashier" class="nav-icon">
+                    Cashier
+                </a>
+                <a href="admin-inventory.html" class="nav-item">
+                    <img src="icons/inventory.png" alt="Inventory" class="nav-icon">
+                    Inventory
+                </a>
+                <a href="admin-sales.html" class="nav-item">
+                    <img src="icons/history.png" alt="Sales History" class="nav-icon">
+                    Sales History
+                </a>
+                <a href="admin-reports.html" class="nav-item active">
+                    <img src="icons/reports.png" alt="Reports" class="nav-icon">
+                    Reports
+                </a>
+                <a href="admin-customers.html" class="nav-item">
+                    <img src="icons/customer.png" alt="Customers" class="nav-icon">
+                    Customers
+                </a>
+                <a href="admin-configurations.html" class="nav-item">
+                    <img src="icons/setting.png" alt="Configuration" class="nav-icon">
+                    Configuration
+                </a>
+            </div>
+            
+            <!-- Footer Text -->
+            <div class="sidebar-footer">
+                <p>Developed by ESoft UNI Bit 004 Project Group 04</p>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1 class="page-title">Total Sales Report</h1>
+                </div>
+                <div class="header-right">
+                    <div class="greeting">
+                        <span class="greeting-text">Good Morning</span>
+                        <div class="date-time">
+                            <span id="currentDate">25 May 2025</span>
+                            <span id="currentTime">22:45:04</span>
+                        </div>
+                    </div>
+                </div>
+            </header><!-- Content Header -->
+            <div class="content-header">
+            </div>
+
+            <!-- Content Body -->
+            <div class="content-body">
+                <!-- Report Filters -->
+                <div class="report-filters">
+                    <div class="filter-group">
+                        <label for="reportType">Report Type:</label>
+                        <select id="reportType">
+                            <option value="daily">Today's Sales</option>
+                            <option value="weekly">This Week</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                            <option value="all">All Time</option>
+                        </select>
+                    </div>
+                    <div class="filter-actions">
+                        <button class="btn btn-primary" onclick="generateReport()">Generate Report</button>
+                        <button class="btn btn-secondary" onclick="downloadPDF()">Download PDF</button>
+                    </div>
+                </div>
+
+                <!-- Sales Summary Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card good">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-value" id="totalSales">Rs. 8,55,875</div>
+                        <div class="stat-label">Total Revenue</div>
+                        <div class="stat-change positive">+12.5% from last month</div>
+                    </div>
+                    <div class="stat-card info">
+                        <div class="stat-icon">🛒</div>
+                        <div class="stat-value" id="totalTransactions">1,247</div>
+                        <div class="stat-label">Total Transactions</div>
+                        <div class="stat-change positive">+8.3% from last month</div>
+                    </div>
+                    <div class="stat-card warning">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-value" id="averageSale">Rs. 686</div>
+                        <div class="stat-label">Average Sale Value</div>
+                        <div class="stat-change positive">+3.7% from last month</div>
+                    </div>
+                    <div class="stat-card danger">
+                        <div class="stat-icon">📈</div>
+                        <div class="stat-value" id="totalDiscounts">Rs. 27,609</div>
+                        <div class="stat-label">Total Discounts</div>
+                        <div class="stat-change positive">+15.2% from last month</div>
+                    </div>                </div>
+
+                <!-- Sales Transactions Table -->
+                <div class="report-section">
+                    <h3 id="salesTableTitle">Sales Transactions</h3>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Sale ID</th>
+                                    <th>Date & Time</th>
+                                    <th>Customer</th>
+                                    <th>Cashier</th>
+                                    <th>Subtotal</th>
+                                    <th>Discount</th>
+                                    <th>Total</th>
+                                    <th>Payment</th>
+                                </tr>
+                            </thead>
+                            <tbody id="salesTableBody">
+                                <tr>
+                                    <td colspan="8" class="loading">Loading sales data...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main> 
+    </div>
+
+    <script src="js/admin-total-sales-report.js" defer></script>
+
+    <style>
+        /* Report-specific styles */
+        .report-filters {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: end;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 0.9rem;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .report-section {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .report-section h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            border-bottom: 2px solid #4db8a8;
+            padding-bottom: 10px;
+        }        .chart-container {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            height: 400px;
+            position: relative;
+        }
+
+        .rank-badge {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 25px;
+            font-weight: bold;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .rank-badge.gold { background: #FFD700; }
+        .rank-badge.silver { background: #C0C0C0; }
+        .rank-badge.bronze { background: #CD7F32; }
+        .rank-badge { background: #95a5a6; }
+
+        .payment-analysis {
+            max-width: 500px;
+        }
+
+        .payment-item {
+            margin-bottom: 15px;
+        }
+
+        .payment-label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .payment-bar {
+            height: 20px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .payment-fill {
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .payment-fill.cash { background: #27ae60; }
+        .payment-fill.card { background: #3498db; }
+        .payment-fill.online { background: #e74c3c; }
+
+        .payment-value {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .performance-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .performance-badge.excellent {
+            background: #d5f4e6;
+            color: #27ae60;
+        }
+
+        .performance-badge.good {
+            background: #ddeafe;
+            color: #3498db;
+        }
+
+        .performance-badge.average {
+            background: #fef5e7;
+            color: #f39c12;
+        }
+
+        .stat-change {
+            font-size: 0.8rem;
+            margin-top: 5px;
+        }
+
+        .stat-change.positive {
+            color: #27ae60;
+        }
+
+        .stat-change.negative {
+            color: #e74c3c;
+        }
+
+        .positive {
+            color: #27ae60;
+            font-weight: 600;
+        }
+
+        .loading {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 20px;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #e74c3c;
+            font-weight: bold;
+            padding: 20px;
+            background-color: #fdf2f2;
+        }
+
+        .error {
+            text-align: center;
+            color: #e74c3c;
+            font-weight: bold;
+            padding: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #4db8a8;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #3a9d91;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+
+        .payment-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .payment-badge.payment-cash {
+            background: #d5f4e6;
+            color: #27ae60;
+        }
+
+        .payment-badge.payment-card {
+            background: #ddeafe;
+            color: #3498db;
+        }
+
+        @media print {
+            .sidebar, .filter-actions {
+                display: none;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</body>
+</html>
